@@ -1,0 +1,50 @@
+{% extends "landing/layout/layout.twig" %}
+
+{% block title %}
+	Blogginit | Home
+{% endblock %}
+
+{% block content %}
+
+	<nav class="navbar navbar-light bg-light">
+		<div class="container">
+			<a class="navbar-brand" href="#">Blogginit</a>
+			<a href="#" class="btn btn-primary">Login</a>
+		</div>
+	</nav>
+
+	<section class="bg-light px-5 text-center">
+		<div class="container">
+			<h1 class="fw-bold h1">Welcome to Blogginit</h1>
+			<p class="h5 text-secondary">Create your own blog or explore amazing content from others.</p>
+			<a href="#" class="btn btn-primary btn-lg">Start Blogging</a>
+		</div>
+	</section>
+
+	<section class="px-3 text-center">
+		<div class="container">
+			<h2 class="bg-secondary mb-3">Why Choose Blogginit?</h2>
+			<div class="row">
+				<div class="col-md-4">
+					<h5>Easy to Use</h5>
+					<p>Create and manage blogs effortlessly with our intuitive interface.</p>
+				</div>
+				<div class="col-md-4">
+					<h5>Customizable</h5>
+					<p>Personalize your blog with themes and layouts that suit your style.</p>
+				</div>
+				<div class="col-md-4">
+					<h5>Community</h5>
+					<p>Connect with other bloggers and share your ideas with the world.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+    <footer class="bg-secondary text-white px-2 text-center">
+        <div class="container">
+            <p>&copy; 2023 Blogginit. All rights reserved.</p>
+        </div>
+    </footer>
+
+{% endblock %}

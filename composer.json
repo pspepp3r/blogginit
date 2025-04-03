@@ -1,0 +1,51 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "pspepp3r/prophetic",
+    "description": "A framework for starting up projects",
+    "type": "project",
+    "keywords": ["prophetic", "framework"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "pspepp3r",
+            "email": "prosperpepple12@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Src\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=8.2",
+        "doctrine/dbal": "^4.2",
+        "doctrine/migrations": "^3.8",
+        "doctrine/orm": "^3.3",
+        "php-di/php-di": "^7.0",
+        "slim/slim": "^4.14",
+        "slim/psr7": "^1.7",
+        "slim/twig-view": "^3.4",
+        "symfony/cache": "^7.2",
+        "symfony/console": "^7.2",
+        "symfony/mailer": "^7.2",
+        "symfony/twig-bridge": "^7.2",
+        "symfony/webpack-encore-bundle": "^2.2",
+        "twig/twig": "^3.17",
+        "vlucas/phpdotenv": "^5.6",
+        "vlucas/valitron": "^1.4",
+        "itsgoingd/clockwork": "^5.3",
+        "league/flysystem": "^3.29",
+        "league/mime-type-detection": "^1.16",
+        "twig/intl-extra": "^3.20"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

@@ -1,0 +1,35 @@
+<?php
+
+declare(strict_types=1);
+
+use Doctrine\Migrations\Configuration\EntityManager\ExistingEntityManager;
+use Doctrine\Migrations\Configuration\Migration\PhpFile;
+use Doctrine\Migrations\DependencyFactory;
+use Doctrine\Migrations\Tools\Console\ConsoleRunner;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Console\EntityManagerProvider\ConnectionFromManagerProvider;
+use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
+use Src\Services\ConfigService;
+use Symfony\Component\Console\Application;
+
+$container = require __DIR__ . '/bootstrap.php';
+
+$entityManager = $container->get(EntityManager::class);
+$config = new PhpFile(CONFIG_PATH . '/db/migrations.php');
+$appConfig = $container->get(ConfigService::class);
+
+$dependencyFactory = DependencyFactory::fromEntityManager($config, new ExistingEntityManager($entityManager));
+
+$entityManagerProvider = new SingleManagerProvider($entityManager);
+$connectionProvider = new ConnectionFromManagerProvider($entityManagerProvider);
+
+$builtCommands = require CONFIG_PATH . '/console/built_commands.php';
+$customCommands = require CONFIG_PATH . '/console/custom_commands.php';
+
+$application = new Application($appConfig->get('app.app_name'), $appConfig->get('app.app_version'));
+
+ConsoleRunner::addCommands($application, $dependencyFactory);
+
+$application->addCommands($builtCommands($entityManagerProvider, $connectionProvider),);
+$application->addCommands(array_map(fn($command) => $container->get($command), $customCommands));
+$application->run();
