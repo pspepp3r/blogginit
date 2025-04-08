@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Src\Mail;
+namespace Src\Mails;
 
 use Src\Entities\User;
 use Src\Services\ConfigService;

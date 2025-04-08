@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Src\RequestValidators;
+namespace Src\Validators;
 
 use Src\Contracts\RequestValidatorFactoryInterface;
 use Src\Contracts\RequestValidatorInterface;

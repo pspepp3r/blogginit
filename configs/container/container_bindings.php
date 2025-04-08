@@ -12,11 +12,17 @@ use Src\Services\ConfigService;
 use Doctrine\DBAL\DriverManager;
 use Twig\Extra\Intl\IntlExtension;
 use Symfony\Component\Asset\Package;
+use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Asset\Packages;
+use Symfony\Component\Mailer\Transport;
+use Slim\Interfaces\RouteParserInterface;
+use Symfony\Bridge\Twig\Mime\BodyRenderer;
 use Src\Classes\RouteEntityBindingStrategy;
+use Src\Validators\RequestValidatorFactory;
+use Symfony\Component\Mailer\MailerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Symfony\Bridge\Twig\Extension\AssetExtension;
-use Src\RequestValidators\RequestValidatorFactory;
+use Symfony\Component\Mime\BodyRendererInterface;
 use Symfony\WebpackEncoreBundle\Asset\TagRenderer;
 use Src\Contracts\RequestValidatorFactoryInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -50,6 +56,8 @@ return [
         return $app;
     },
 
+    BodyRendererInterface::class            => fn(Twig $twig) => new BodyRenderer($twig->getEnvironment()),
+
     ConfigService::class => new ConfigService(require CONFIG_PATH . '/app.php'),
 
     EntityManager::class => function ($connection, $ORMConfig, ConfigService $configService): EntityManager {
@@ -61,11 +69,23 @@ return [
         return $entityManager;
     },
 
+    MailerInterface::class                  => function (ConfigService $config) {
+        if ($config->get('mailer.driver') === 'log') {
+            return new \Src\Classes\Mailer();
+        }
+
+        $transport = Transport::fromDsn($config->get('mailer.dsn'));
+
+        return new Mailer($transport);
+    },
+
     ResponseFactoryInterface::class => fn(App $app) => $app->getResponseFactory(),
 
     RequestValidatorFactoryInterface::class => fn(Container $container) => $container->get(
         RequestValidatorFactory::class
     ),
+
+    RouteParserInterface::class             => fn(App $app) => $app->getRouteCollector()->getRouteParser(),
 
     SessionInterface::class => fn(Container $container) => $container->get(Session::class),
 

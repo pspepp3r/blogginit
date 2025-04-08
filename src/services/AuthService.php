@@ -6,7 +6,7 @@ namespace Src\Services;
 
 use Src\Entities\User;
 use Src\Data_objects\RegisterUserData;
-use Src\Mail\SignupEmail;
+use Src\Mails\SignupEmail;
 use Src\Providers\UserProvider;
 use Symfony\Component\HttpFoundation\Session\Session;
 
