@@ -17,7 +17,6 @@ return function (App $app) {
     $app->addMiddleware(TwigMiddleware::create($app, $container
         ->get(Twig::class)));
     $app->add(HttpSpecializedErrorMiddleware::class);
-    $app->add(StartSessionsMiddleware::class);
 
     $app->addErrorMiddleware(
         (bool) $config->get('error_handling.display_error_details'),

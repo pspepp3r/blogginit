@@ -11,17 +11,16 @@ use Src\SessionService;
 
 class LandingController
 {
-    public function __construct(private Twig $twig, private readonly SessionService $session) {}
+    public function __construct(private Twig $twig) {}
     public function index(Response $response, array $args): Response
     {
         return $this->twig->render($response, 'landing/landing.twig', $args);
     }
 
-    public function error(Response $response, array $args): Response
+    public function error(Request $request, Response $response, array $args): Response
     {
         $args = [
-        'code' => $this->session->get('code'),
-        'message' => $this->session->get('message')
+        'error' => $request->getQueryParams()
         ];
 
         return $this->twig->render($response, 'landing/error.twig', $args);

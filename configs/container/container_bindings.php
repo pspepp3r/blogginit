@@ -5,19 +5,15 @@ declare(strict_types=1);
 use Slim\App;
 use DI\Container;
 use Slim\Views\Twig;
-use Src\SessionService;
 use Doctrine\ORM\ORMSetup;
 use Slim\Factory\AppFactory;
 use Doctrine\ORM\EntityManager;
 use Src\Services\ConfigService;
 use Doctrine\DBAL\DriverManager;
-use Src\DataObjects\SessionConfig;
 use Twig\Extra\Intl\IntlExtension;
-use Src\Contracts\SessionInterface;
 use Symfony\Component\Asset\Package;
 use Symfony\Component\Asset\Packages;
 use Src\Classes\RouteEntityBindingStrategy;
-use Src\Services\SessionService as Session;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Symfony\Bridge\Twig\Extension\AssetExtension;
 use Symfony\WebpackEncoreBundle\Asset\TagRenderer;
@@ -62,8 +58,6 @@ return [
     },
 
     ResponseFactoryInterface::class => fn(App $app) => $app->getResponseFactory(),
-
-    SessionInterface::class => fn() => new Session(new SessionConfig()),
 
     Twig::class => function (Container $container, ConfigService $configService): Twig {
 

@@ -18,7 +18,6 @@ class HttpSpecializedErrorMiddleware implements MiddlewareInterface
     public function __construct(
         private readonly ResponseFactoryInterface $responseFactory,
         private readonly Twig $twig,
-        private readonly SessionService $sessionService
     ) {}
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -28,10 +27,8 @@ class HttpSpecializedErrorMiddleware implements MiddlewareInterface
             $code = (string) $h->getCode();
             $message = $h->getMessage();
 
-            $this->sessionService->put('code', $code);
-            $this->sessionService->put('message', $message);
-
-            return $this->responseFactory->createResponse(302)->withHeader('Location', '/error');
+            return $this->responseFactory->createResponse(302)
+            ->withHeader('Location', "/error?code=$code&message=$message");
         }
     }
 }
