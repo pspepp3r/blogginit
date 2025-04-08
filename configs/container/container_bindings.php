@@ -21,6 +21,8 @@ use Symfony\WebpackEncoreBundle\Asset\EntrypointLookup;
 use Symfony\WebpackEncoreBundle\Twig\EntryFilesTwigExtension;
 use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupCollection;
 use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 return [
 
@@ -58,6 +60,8 @@ return [
     },
 
     ResponseFactoryInterface::class => fn(App $app) => $app->getResponseFactory(),
+
+    SessionInterface::class => fn(Container $container) => $container->get(Session::class),
 
     Twig::class => function (Container $container, ConfigService $configService): Twig {
 

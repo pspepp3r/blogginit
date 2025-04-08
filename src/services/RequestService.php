@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Src\Services;
 
-use Src\Contracts\SessionInterface;
-use Src\DataObjects\DataTableQueryParams;
 use Psr\Http\Message\ServerRequestInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class RequestService
 {
