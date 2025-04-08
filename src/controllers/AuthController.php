@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Src\Controllers;
 
 use Slim\Views\Twig;
-use Src\Validators\AuthService;
+use Src\Services\AuthService;
 use Src\Data_objects\RegisterUserData;
 use Psr\Http\Message\ResponseInterface as Response;
 use Src\Contracts\RequestValidatorFactoryInterface;
@@ -39,7 +39,7 @@ class AuthController
 
         $this->authService->register(new RegisterUserData($data['username'], $data['email'], $data['password']));
 
-        return $response;
+        return $response->withHeader('Location', '/dashboard')->withStatus(302);
     }
 
     public function login(Request $request, Response $response): Response

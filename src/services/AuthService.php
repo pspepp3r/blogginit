@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Src\Validators;
+namespace Src\Services;
 
 use Src\Entities\User;
 use Src\Data_objects\RegisterUserData;
