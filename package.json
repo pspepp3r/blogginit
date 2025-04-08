@@ -1,28 +1,28 @@
 {
-	"name": "prophetic",
-	"version": "1.0.0",
-	"description": "A framework for starting up projects",
-	"main": "public/index.php",
-	"directories": {
-		"test": "tests"
-	},
-	"scripts": {
-		"test": "prophetic-test",
-		"dev": "encore dev",
-		"watch": "encore dev --watch",
-		"build": "encore production --progress"
-	},
-	"author": "pspepp3r",
-	"license": "MIT",
-	"dependencies": {
-		"@popperjs/core": "^2.11.8",
-		"@symfony/webpack-encore": "^5.0.1",
-		"bootstrap": "^5.3.3",
-		"bootstrap-icons": "^1.11.3",
-		"core-js": "^3.26.1",
-		"file-loader": "^6.2.0",
-		"sass": "^1.83.4",
-		"sass-loader": "^16.0.4",
-		"webpack-notifier": "^1.15.0"
-	}
+    "name": "blogginit",
+    "version": "1.0.0",
+    "description": "A simple blogging site",
+    "main": "public/index.php",
+    "directories": {
+        "test": "tests"
+    },
+    "scripts": {
+        "test": "blogginit-test",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    },
+    "author": "pspepp3r",
+    "license": "MIT",
+    "dependencies": {
+        "@popperjs/core": "^2.11.8",
+        "@symfony/webpack-encore": "^5.0.1",
+        "bootstrap": "^5.3.3",
+        "bootstrap-icons": "^1.11.3",
+        "core-js": "^3.26.1",
+        "file-loader": "^6.2.0",
+        "sass": "^1.83.4",
+        "sass-loader": "^16.0.4",
+        "webpack-notifier": "^1.15.0"
+    }
 }
