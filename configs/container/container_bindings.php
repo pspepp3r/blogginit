@@ -61,6 +61,10 @@ return [
 
     ResponseFactoryInterface::class => fn(App $app) => $app->getResponseFactory(),
 
+    RequestValidatorFactoryInterface::class => fn(Container $container) => $container->get(
+        RequestValidatorFactory::class
+    ),
+
     SessionInterface::class => fn(Container $container) => $container->get(Session::class),
 
     Twig::class => function (Container $container, ConfigService $configService): Twig {
