@@ -4,47 +4,44 @@
 	Blogginit | Home
 {% endblock %}
 
-{% block content %}
-
-	<nav class="navbar navbar-light bg-light">
+{% block nav %}
+    <nav class="bg-white navbar navbar-light px-5">
 		<div class="container">
 			<a class="navbar-brand" href="#">Blogginit</a>
-			<a href="#" class="btn btn-primary">Login</a>
+			<a href="/login" class="btn btn-primary">Login</a>
 		</div>
 	</nav>
+{% endblock %}
 
-	<section class="bg-light px-5 text-center">
+{% block content %}
+	<section class="px-5 py-2 text-center m-5">
 		<div class="container">
+        {# <img src="{{ asset('build/images/blogginit.png') }}" alt="Blogginit Logo" class="w-100" style="height: 20em"> #}
 			<h1 class="fw-bold h1">Welcome to Blogginit</h1>
-			<p class="h5 text-secondary">Create your own blog or explore amazing content from others.</p>
-			<a href="#" class="btn btn-primary btn-lg">Start Blogging</a>
+			<p class="lead text-secondary mb-5">Create your own blog or explore amazing content from others.</p>
+			<a href="/register" class="btn btn-primary btn-lg">Start Blogging</a>
 		</div>
 	</section>
 
+    <hr>
+
 	<section class="px-3 text-center">
 		<div class="container">
-			<h2 class="bg-secondary mb-3">Why Choose Blogginit?</h2>
+			<h2 class="mb-5 p-1 h3">Why Choose Blogginit?</h2>
 			<div class="row">
 				<div class="col-md-4">
-					<h5>Easy to Use</h5>
+					<h5 class="lead">Easy to Use</h5>
 					<p>Create and manage blogs effortlessly with our intuitive interface.</p>
 				</div>
 				<div class="col-md-4">
-					<h5>Customizable</h5>
+					<h5 class="lead">Customizable</h5>
 					<p>Personalize your blog with themes and layouts that suit your style.</p>
 				</div>
 				<div class="col-md-4">
-					<h5>Community</h5>
+					<h5 class="lead">Community</h5>
 					<p>Connect with other bloggers and share your ideas with the world.</p>
 				</div>
 			</div>
 		</div>
 	</section>
-
-    <footer class="bg-secondary text-white px-2 text-center">
-        <div class="container">
-            <p>&copy; 2023 Blogginit. All rights reserved.</p>
-        </div>
-    </footer>
-
 {% endblock %}

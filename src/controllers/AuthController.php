@@ -14,17 +14,11 @@ class AuthController
     public function __construct(private Twig $twig) {}
     public function renderLogin(Response $response, array $args): Response
     {
-        $args = [
-            'title' => 'Blogginit | Login',
-        ];
         return $this->twig->render($response, 'landing/login.twig', $args);
     }
 
     public function renderRegister(Response $response, array $args): Response
     {
-        $args = [
-            'title' => 'Blogginit | Register',
-        ];
         return $this->twig->render($response, 'landing/register.twig', $args);
     }
 }
