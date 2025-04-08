@@ -5,18 +5,25 @@ declare(strict_types=1);
 use Slim\App;
 use Src\Controllers\AuthController;
 use Src\Controllers\BlogController;
-use Src\Controllers\DashboardController;
+use Slim\Routing\RouteCollectorProxy;
 use Src\Controllers\LandingController;
+use Src\Controllers\DashboardController;
 
 return function (App $app): void {
-
     // Homepage
-    $app->get('/', [LandingController::class, 'index']);
     $app->get('/error', [LandingController::class, 'error']);
 
-    $app->get('/login', [AuthController::class, 'renderLogin']);
-    $app->get('/register', [AuthController::class, 'renderRegister']);
+    $app->group('', function (RouteCollectorProxy $group) {
+        $group->get('/', [LandingController::class, 'index']);
+        $group->get('/login', [AuthController::class, 'renderLogin']);
+        $group->get('/register', [AuthController::class, 'renderRegister']);
 
-    $app->get('/dashboard', [DashboardController::class, 'index']);
-    $app->get('/reports', [BlogController::class, 'renderReports']);
+        $group->post('/login', [AuthController::class, 'login']);
+        $group->post('/register', [AuthController::class, 'register']);
+    });
+
+    $app->group('', function (RouteCollectorProxy $group) {
+        $group->get('/dashboard', [DashboardController::class, 'index']);
+        $group->get('/reports', [BlogController::class, 'renderReports']);
+    });
 };
