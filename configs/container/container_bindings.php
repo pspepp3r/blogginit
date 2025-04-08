@@ -16,13 +16,15 @@ use Symfony\Component\Asset\Packages;
 use Src\Classes\RouteEntityBindingStrategy;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Symfony\Bridge\Twig\Extension\AssetExtension;
+use Src\RequestValidators\RequestValidatorFactory;
 use Symfony\WebpackEncoreBundle\Asset\TagRenderer;
+use Src\Contracts\RequestValidatorFactoryInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\WebpackEncoreBundle\Asset\EntrypointLookup;
 use Symfony\WebpackEncoreBundle\Twig\EntryFilesTwigExtension;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupCollection;
 use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 return [
 
