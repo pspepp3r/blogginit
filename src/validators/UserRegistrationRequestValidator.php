@@ -7,13 +7,12 @@ namespace Src\Validators;
 use Src\Entities\User;
 use Valitron\Validator;
 use Doctrine\ORM\EntityManager;
-use Src\Contracts\EntityManagerServiceInterface;
 use Src\Errors\ValidationException;
 use Src\Contracts\RequestValidatorInterface;
 
 class UserRegistrationRequestValidator implements RequestValidatorInterface
 {
-    public function __construct(private readonly EntityManagerServiceInterface $entityManager) {}
+    public function __construct(private readonly EntityManager $entityManager) {}
 
     public function validate(array $data): array
     {
