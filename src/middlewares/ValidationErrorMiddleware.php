@@ -22,10 +22,12 @@ class ValidationErrorMiddleware implements MiddlewareInterface
     {
         if ($errors = $this->session->get('flash:errors')) {
             $this->twig->getEnvironment()->addGlobal('errors', $errors);
+            $this->session->remove('flash:errors');
         }
 
         if ($old = $this->session->get('flash:old')) {
             $this->twig->getEnvironment()->addGlobal('old', $old);
+            $this->session->remove('flash:old');
         }
 
         return $handler->handle($request);

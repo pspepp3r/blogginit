@@ -37,7 +37,7 @@ class AuthController
             $request->getParsedBody()
         );
 
-        $this->authService->register(new RegisterUserData($data['username'], $data['email'], $data['password']));
+        $this->authService->register(new RegisterUserData($data['name'], $data['email'], $data['password']));
 
         return $response->withHeader('Location', '/dashboard')->withStatus(302);
     }
