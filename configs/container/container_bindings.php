@@ -2,24 +2,29 @@
 
 declare(strict_types=1);
 
-use DI\Container;
-use Doctrine\DBAL\DriverManager;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\ORMSetup;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\App;
-use Slim\Factory\AppFactory;
+use DI\Container;
 use Slim\Views\Twig;
-use Src\Classes\RouteEntityBindingStrategy;
+use Src\SessionService;
+use Doctrine\ORM\ORMSetup;
+use Slim\Factory\AppFactory;
+use Doctrine\ORM\EntityManager;
 use Src\Services\ConfigService;
-use Symfony\Bridge\Twig\Extension\AssetExtension;
+use Doctrine\DBAL\DriverManager;
+use Src\DataObjects\SessionConfig;
+use Twig\Extra\Intl\IntlExtension;
+use Src\Contracts\SessionInterface;
 use Symfony\Component\Asset\Package;
 use Symfony\Component\Asset\Packages;
-use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
-use Symfony\WebpackEncoreBundle\Asset\EntrypointLookup;
-use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupCollection;
+use Src\Classes\RouteEntityBindingStrategy;
+use Src\Services\SessionService as Session;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Symfony\Bridge\Twig\Extension\AssetExtension;
 use Symfony\WebpackEncoreBundle\Asset\TagRenderer;
+use Symfony\WebpackEncoreBundle\Asset\EntrypointLookup;
 use Symfony\WebpackEncoreBundle\Twig\EntryFilesTwigExtension;
+use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupCollection;
+use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
 
 return [
 
@@ -58,10 +63,13 @@ return [
 
     ResponseFactoryInterface::class => fn(App $app) => $app->getResponseFactory(),
 
-    Twig::class => function ($container, ConfigService $configService): Twig {
+    SessionInterface::class => fn() => new Session(new SessionConfig()),
+
+    Twig::class => function (Container $container, ConfigService $configService): Twig {
 
         $twig = Twig::create(VIEW_PATH, ['cache' => STORAGE_PATH . '/cache/twig', 'auto_reload' => $configService->get('db.dev_mode')]);
 
+        $twig->addExtension(new IntlExtension());
         $twig->addExtension(new EntryFilesTwigExtension($container));
         $twig->addExtension(new AssetExtension($container->get('webpack_encore.packages')));
 
