@@ -8,14 +8,14 @@ use Src\Entities\User;
 use Src\Data_objects\RegisterUserData;
 use Src\Mails\SignupEmail;
 use Src\Providers\UserProvider;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class AuthService
 {
     private ?User $user = null;
 
     public function __construct(
-        private readonly Session $session,
+        private readonly SessionInterface $session,
         private readonly SignupEmail $signupEmail,
         private readonly UserProvider $userProvider
     ) {}
