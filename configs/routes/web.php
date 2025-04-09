@@ -12,6 +12,7 @@ use Src\Controllers\VerifyController;
 use Src\Controllers\LandingController;
 use Src\Controllers\DashboardController;
 use Src\Middlewares\VerifyEmailMiddleware;
+use Src\Controllers\PasswordResetController;
 use Src\Middlewares\ValidateSignatureMiddleware;
 
 return function (App $app): void {
@@ -19,13 +20,26 @@ return function (App $app): void {
 
     $app->get('/error', [LandingController::class, 'error']);
 
-    $app->group('', function (RouteCollectorProxy $group) {
-        $group->get('/', [LandingController::class, 'index']);
-        $group->get('/login', [AuthController::class, 'renderLogin']);
-        $group->get('/register', [AuthController::class, 'renderRegister']);
+    $app->group('', function (RouteCollectorProxy $guest) {
+        $guest->get('/', [LandingController::class, 'index']);
+        $guest->get('/login', [AuthController::class, 'renderLogin']);
+        $guest->get('/register', [AuthController::class, 'renderRegister']);
+        $guest->get('/forgot-password', [PasswordResetController::class, 'showForgotPasswordForm']);
+        $guest->get('/reset-password/{token}', [PasswordResetController::class, 'showResetPasswordForm'])
+            ->setName('password-reset')
+            ->add(ValidateSignatureMiddleware::class);
 
-        $group->post('/login', [AuthController::class, 'login']);
-        $group->post('/register', [AuthController::class, 'register']);
+        $guest->post('/login', [AuthController::class, 'login']);
+        $guest->post('/register', [AuthController::class, 'register']);
+        $guest->post('/login/two-factor', [AuthController::class, 'twoFactorLogin'])
+            ->setName('twoFactorLogin');
+            // ->add(RateLimitMiddleware::class);
+        $guest->post('/forgot-password', [PasswordResetController::class, 'handleForgotPasswordRequest'])
+            ->setName('handleForgotPassword');
+            // ->add(RateLimitMiddleware::class);
+        $guest->post('/reset-password/{token}', [PasswordResetController::class, 'resetPassword'])
+            ->setName('resetPassword');
+            // ->add(RateLimitMiddleware::class);
     })->add(GuestMiddleware::class);
 
     $app->group('', function (RouteCollectorProxy $group) {
