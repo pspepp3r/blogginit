@@ -47,4 +47,12 @@ class UserProvider
     {
         return $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
     }
+
+    public function updatePassword(User $user, string $password): void
+    {
+        $user->setPassword($this->hashService->hashPassword($password));
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+    }
 }
