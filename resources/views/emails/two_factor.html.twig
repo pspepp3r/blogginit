@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Welcome to Blogginit</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="container my-5">
+			<div class="card">
+				<div class="card-header bg-primary text-white">
+					<h2>Welcome to Blogginit!</h2>
+				</div>
+				<div class="card-body">
+					<p>Hi
+						{{ user.name }},</p>
+					<p>Ready for another session to Blogginit?</p>
+					<p>Your verification code is:</p>
+					<h3 class="text-center text-success">{{ code }}</h3>
+					<p>Please use this code to login to your account and get started!</p>
+					<p>If you have any questions, feel free to reach out to our support team.</p>
+					<p>Happy blogging!</p>
+					<p>Best regards, <strong>The Blogginit Team</strong>
+					</p>
+				</div>
+				<div class="card-footer text-muted text-center">
+					&copy;
+					{{ "now"|date("Y") }}
+					Blogginit. All rights reserved.
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
