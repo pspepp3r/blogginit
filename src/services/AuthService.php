@@ -46,4 +46,27 @@ class AuthService
 
         $this->user = null;
     }
+
+    public function user(): ?User
+    {
+        if ($this->user !== null) {
+            return $this->user;
+        }
+
+        $userId = $this->session->get('user');
+
+        if (! $userId) {
+            return null;
+        }
+
+        $user = $this->userProvider->getById($userId);
+
+        if (! $user) {
+            return null;
+        }
+
+        $this->user = $user;
+
+        return $this->user;
+    }
 }

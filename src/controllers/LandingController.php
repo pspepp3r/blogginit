@@ -7,7 +7,6 @@ namespace Src\Controllers;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
-use Src\SessionService;
 
 class LandingController
 {
