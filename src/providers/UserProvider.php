@@ -42,4 +42,9 @@ class UserProvider
     {
         return $this->entityManager->find(User::class, $userId);
     }
+
+    public function getByCredentials(array $credentials): ?User
+    {
+        return $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
+    }
 }

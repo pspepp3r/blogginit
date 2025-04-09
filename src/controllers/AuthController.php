@@ -6,17 +6,22 @@ namespace Src\Controllers;
 
 use Slim\Views\Twig;
 use Src\Services\AuthService;
+use Src\Enums\AuthAttemptStatus;
+use Src\Errors\ValidationException;
 use Src\Data_objects\RegisterUserData;
+use Src\Validators\UserLoginRequestValidator;
 use Psr\Http\Message\ResponseInterface as Response;
 use Src\Contracts\RequestValidatorFactoryInterface;
 use Src\Validators\UserRegistrationRequestValidator;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Src\Services\ResponseFormatterService;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class AuthController
 {
     public function __construct(
         private readonly AuthService $authService,
+        private readonly ResponseFormatterService $responseFormatter,
         private readonly RequestValidatorFactoryInterface $requestValidatorFactory,
         private readonly SessionInterface $session,
         private Twig $twig
@@ -44,9 +49,22 @@ class AuthController
 
     public function login(Request $request, Response $response): Response
     {
-        $data = $request->getParsedBody();
+        $data = $this->requestValidatorFactory->make(UserLoginRequestValidator::class)->validate(
+            $request->getParsedBody()
+        );
 
-        return $response;
+        $status = $this->authService->attemptLogin($data);
+        
+        if ($status === AuthAttemptStatus::FAILED) {
+            throw new ValidationException(['password' => ['You have entered an invalid username or password']]);
+        }
+
+        if ($status === AuthAttemptStatus::TWO_FACTOR_AUTH) {
+            return $this->responseFormatter->asJson($response, ['two_factor' => true]);
+        }
+
+        // return $this->responseFormatter->asJson($response, []);
+        return $response->withHeader('Location', '/dashboard')->withStatus(302);
     }
 
     public function logOut(Response $response): Response

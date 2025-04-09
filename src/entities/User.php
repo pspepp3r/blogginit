@@ -41,7 +41,7 @@ class User
     private bool $twoFactor;
 
     #[Column('verified_at', nullable: true)]
-    private DateTime $verifiedAt;
+    private ?DateTime $verifiedAt;
 
     #[Column('joined_at')]
     private DateTime $joinedAt;
@@ -121,7 +121,7 @@ class User
         return $this;
     }
 
-    public function getTwoFactor(): bool
+    public function hasTwoFactorAuthEnabled(): bool
     {
         return $this->twoFactor;
     }
@@ -133,7 +133,7 @@ class User
         return $this;
     }
 
-    public function getVerifiedAt(): DateTime
+    public function getVerifiedAt(): ?DateTime
     {
         return $this->verifiedAt;
     }
