@@ -23,12 +23,12 @@ class AuthController
     ) {}
     public function renderLogin(Response $response, array $args): Response
     {
-        return $this->twig->render($response, 'landing/login.twig', $args);
+        return $this->twig->render($response, 'auth/login.twig', $args);
     }
 
     public function renderRegister(Response $response, array $args): Response
     {
-        return $this->twig->render($response, 'landing/register.twig', $args);
+        return $this->twig->render($response, 'auth/register.twig', $args);
     }
 
     public function register(Request $request, Response $response): Response
@@ -47,5 +47,12 @@ class AuthController
         $data = $request->getParsedBody();
 
         return $response;
+    }
+
+    public function logOut(Response $response): Response
+    {
+        $this->authService->logOut();
+
+        return $response->withHeader('Location', '/')->withStatus(302);
     }
 }
