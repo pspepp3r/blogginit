@@ -34,9 +34,10 @@ class SignupEmail
             ->from($this->config->get('mailer.from'))
             ->to($email)
             ->subject('Welcome to Blogginit')
-            ->htmlTemplate('emails/welcome.twig')
+            ->htmlTemplate('emails/welcome.html.twig')
             ->context(
                 [
+                    'user' => $user,
                     'activationLink' => $activationLink,
                     'expirationDate' => $expirationDate,
                 ]

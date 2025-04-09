@@ -20,19 +20,19 @@ class VerifyController
     ) {
     }
 
-    public function index(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function index(ResponseInterface $response): ResponseInterface
     {
-        if ($request->getAttribute('user')?->getVerifiedAt()) {
-            return $response->withHeader('Location', '/')->withStatus(302);
+        if ($this->twig->getEnvironment()->getGlobals()['user']?->getVerifiedAt()) {
+            return $response->withHeader('Location', '/dashboard')->withStatus(302);
         }
 
         return $this->twig->render($response, 'auth/verify.twig');
     }
 
-    public function verify(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    public function verify(ResponseInterface $response, array $args): ResponseInterface
     {
         /** @var User $user */
-        $user = $request->getAttribute('user');
+        $user = $this->twig->getEnvironment()->getGlobals()['user'];
 
         if (! hash_equals((string) $user->getId(), $args['id'])
             || ! hash_equals(sha1($user->getEmail()), $args['hash'])) {
@@ -46,9 +46,9 @@ class VerifyController
         return $response->withHeader('Location', '/')->withStatus(302);
     }
 
-    public function resend(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function resend(ResponseInterface $response): ResponseInterface
     {
-        $this->signupEmail->send($request->getAttribute('user'));
+        $this->signupEmail->send($this->twig->getEnvironment()->getGlobals()['user']);
 
         return $response;
     }
