@@ -29,4 +29,17 @@ class UserProvider
 
         return $user;
     }
+
+    public function verifyUser(User $user): void
+    {
+        $user->setVerifiedAt(new \DateTime());
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+    }
+
+    public function getById(int $userId): ?User
+    {
+        return $this->entityManager->find(User::class, $userId);
+    }
 }
