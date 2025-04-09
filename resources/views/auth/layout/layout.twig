@@ -21,20 +21,18 @@
 		{% endblock %}
 
 		<title>
+
 			{% block title %}{% endblock %}
+
 		</title>
 
 	</head>
 
 	<body class="bg-light">
 
-        <nav class="bg-white navbar navbar-light px-5">
-            <div class="container">
-                <a class="navbar-brand" href="#">Blogginit</a>
-                {{ user.name }}j
-                <a href="/logout" class="btn btn-primary">Logout</a>
-            </div>
-        </nav>
+    {% block nav %}
+        
+    {% endblock %}
 
 		<div class="container">
         
@@ -42,15 +40,16 @@
 
 		</div>
 
-        <footer class="bg-primary text-white p-2 text-center fixed-bottom">
+        
+    <footer class="bg-primary text-white p-2 text-center fixed-bottom">
 
-            <div class="container">
+        <div class="container">
 
-                <p>&copy; {{ 'now' | date('Y') }} Blogginit. All rights reserved.</p>
-                
-            </div>
+            <p>&copy; {{ 'now' | date('Y') }} Blogginit. All rights reserved.</p>
+            
+        </div>
 
-        </footer>
+    </footer>
 
 	</body>
 

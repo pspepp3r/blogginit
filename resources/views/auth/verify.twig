@@ -1,0 +1,23 @@
+{% extends 'app/layout/layout.twig' %}
+
+{% block title %}Blogginit | Verify Email{% endblock %}
+
+{# {% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('verify') }}
+{% endblock %} #}
+
+{% block content %}
+<div class="container mt-5">
+	<div class="row">
+		<div class="col-12 text-center">
+			<h1 class="alert alert-warning" role="alert">Account not Activated!</h1>
+			<p class="text-secondary">Please check your email to verify & activate your account</p>
+		</div>
+        <button class="resend-verify btn btn-primary bg-gradient text-white btn-lg px-2 col-4 ms-5">
+            Resend Verification Email
+        </button>
+	</div>
+</div>
+
+{% endblock %}
