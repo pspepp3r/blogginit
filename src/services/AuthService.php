@@ -38,4 +38,12 @@ class AuthService
 
         $this->user = $user;
     }
+
+    public function logOut(): void
+    {
+        $this->session->remove('user');
+        $this->session->migrate(true);
+
+        $this->user = null;
+    }
 }
