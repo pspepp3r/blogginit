@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Src\Entities;
 
-use DateTime;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Src\Entities\Traits\HasTimestamps;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 
 #[Entity, Table('replies')]
+#[HasLifecycleCallbacks]
 class Reply
 {
     use HasTimestamps;

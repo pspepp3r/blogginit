@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Src\Entities;
 
 use DateTime;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Table;
 
 #[Entity, Table('user_login_codes')]
 class UserLoginCode

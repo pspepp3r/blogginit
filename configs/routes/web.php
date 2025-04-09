@@ -8,6 +8,8 @@ use Src\Controllers\BlogController;
 use Slim\Routing\RouteCollectorProxy;
 use Src\Controllers\LandingController;
 use Src\Controllers\DashboardController;
+use Src\Middlewares\AuthMiddleware;
+use Src\Middlewares\GuestMiddleware;
 
 return function (App $app): void {
     // Homepage
@@ -20,10 +22,10 @@ return function (App $app): void {
 
         $group->post('/login', [AuthController::class, 'login']);
         $group->post('/register', [AuthController::class, 'register']);
-    });
+    })->add(GuestMiddleware::class);
 
     $app->group('', function (RouteCollectorProxy $group) {
         $group->get('/dashboard', [DashboardController::class, 'index']);
         $group->get('/reports', [BlogController::class, 'renderReports']);
-    });
+    })->add(AuthMiddleware::class);
 };

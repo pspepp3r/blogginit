@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Src\Entities;
 
 use DateTime;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
-use Src\Entities\Traits\HasTimestamps;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Table;
+use Src\Entities\Traits\HasTimestamps;
 
 #[Entity, Table(name: 'password_resets')]
 #[HasLifecycleCallbacks]
