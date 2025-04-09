@@ -9,7 +9,7 @@
 		<h1 class="h4 text-center mb-4">Welcome to Blogginit</h1>
 		<form action="/register" method="POST" class="registration-form">
             <div class="mb-3">
-                <label for="name" class="form-label">name</label>
+                <label for="name" class="form-label">Name</label>
                 <input type="text" id="name" name="name" class="form-control {{ errors.name ? 'is-invalid' : '' }}" value="{{ old.name }}" required>
                 <div class="invalid-feedback">
                     {{ errors.name | first }}

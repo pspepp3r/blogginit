@@ -24,7 +24,8 @@ return [
         'app_name' => $_ENV['APP_NAME'],
         'app_version' => $_ENV['APP_VERSION'] ?? '1.0',
         'app_environment' => $appEnv,
-        'app_debug' => $boolean($_ENV['APP_DEBUG'] ?? 0)
+        'app_debug' => $boolean($_ENV['APP_DEBUG'] ?? 0),
+        'app_url' => 'www.blogginit.com'
 
     ],
 
