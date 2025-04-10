@@ -24,8 +24,8 @@ return function (App $app): void {
         $guest->get('/', [LandingController::class, 'index']);
         $guest->get('/login', [AuthController::class, 'renderLogin']);
         $guest->get('/register', [AuthController::class, 'renderRegister']);
-        $guest->get('/forgot-password', [PasswordResetController::class, 'showForgotPasswordForm']);
-        $guest->get('/reset-password/{token}', [PasswordResetController::class, 'showResetPasswordForm'])
+        $guest->get('/forgot-password', [PasswordResetController::class, 'renderForgotPasswordForm']);
+        $guest->get('/reset-password/{token}', [PasswordResetController::class, 'renderResetPasswordForm'])
             ->setName('password-reset')
             ->add(ValidateSignatureMiddleware::class);
 
