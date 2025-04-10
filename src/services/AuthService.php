@@ -84,6 +84,33 @@ class AuthService
         return AuthAttemptStatus::SUCCESS;
     }
 
+    public function attemptTwoFactorLogin(array $data, $request): bool
+    {
+        $userId = $this->session->get('2fa');
+
+        if (! $userId) {
+            return false;
+        }
+
+        $user = $this->userProvider->getById($userId);
+
+        if (! $user || $user->getEmail() !== $data['email']) {
+            return false;
+        }
+
+        if (! $this->userLoginCodeService->verify($user, $data['code'])) {
+            return false;
+        }
+
+        $this->session->remove('2fa');
+
+        $this->logIn($user, $request);
+
+        $this->userLoginCodeService->deactivateAllActiveCodes($user);
+
+        return true;
+    }
+
     public function logOut(): void
     {
         $this->session->remove('user');

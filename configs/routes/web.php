@@ -43,11 +43,11 @@ return function (App $app): void {
     })->add(GuestMiddleware::class);
 
     $app->group('', function (RouteCollectorProxy $group) {
-        $group->get('/logout', [AuthController::class, 'logOut']);
         $group->get('/verify', [VerifyController::class, 'index']);
         $group->get('/verify/{id}/{hash}', [VerifyController::class, 'verify'])
-            ->setName('verify')
-            ->add(ValidateSignatureMiddleware::class);
+        ->setName('verify')
+        ->add(ValidateSignatureMiddleware::class);
+        $group->post('/logout', [AuthController::class, 'logOut']);
         $group->post('/verify', [VerifyController::class, 'resend'])
             ->setName('resendVerification');
             // ->add(RateLimitMiddleware::class);
