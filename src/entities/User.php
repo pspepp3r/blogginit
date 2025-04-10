@@ -49,11 +49,15 @@ class User
     #[Column('updated_at')]
     private DateTime $updatedAt;
 
-    #[OneToMany(mappedBy: 'user', targetEntity: Blog::class)]
+    #[OneToMany(Blog::class, 'user')]
     private Collection $blogs;
+
+    #[OneToMany(Sessions::class, 'user', ['persist', 'remove'])]
+    private Collection $sessions;
 
     public function __construct() {
         $this->blogs = new ArrayCollection();
+        $this->sessions = new ArrayCollection();
 
         $this->twoFactor = false;
     }

@@ -26,12 +26,18 @@ class Sessions
     #[Column('last_action')]
     private DateTime $lastAction;
 
-    #[ManyToOne(cascade: ['remove'])]
+    #[ManyToOne(inversedBy: 'sessions')]
     private User $user;
 
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function setId(string $id): static{
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getIpAddress(): string

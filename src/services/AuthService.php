@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Src\Services;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Src\Entities\User;
 use Src\Mails\SignupEmail;
 use Src\Providers\UserProvider;
@@ -19,6 +20,7 @@ class AuthService
     public function __construct(
         private readonly TwoFactorAuthEmail $twoFactorAuthEmail,
         private readonly SessionInterface $session,
+        private readonly SessionService $sessionService,
         private readonly SignupEmail $signupEmail,
         private readonly UserProvider $userProvider,
         private readonly UserLoginCodeService $userLoginCodeService
@@ -29,21 +31,26 @@ class AuthService
         return password_verify($credentials['password'], $user->getPassword());
     }
 
-    public function register(RegisterUserData $data): User
+    public function register(RegisterUserData $data, $request): User
     {
         $user = $this->userProvider->createUser($data);
 
-        $this->logIn($user);
+        $this->logIn($user, $request);
 
         $this->signupEmail->send($user);
 
         return $user;
     }
 
-    public function logIn(User $user): void
+    public function logIn(User $user, ServerRequestInterface $request): void
     {
         $this->session->migrate(true);
         $this->session->set('user', $user->getId());
+        $this->session->set('userEntity', $user);
+        $this->sessionService->storeSession(
+            $request->getServerParams()['HTTP_USER_AGENT'],
+            $request->getServerParams()['REMOTE_ADDR']
+        );
 
         $this->user = $user;
     }
@@ -58,7 +65,7 @@ class AuthService
         $this->twoFactorAuthEmail->send($this->userLoginCodeService->generate($user));
     }
 
-    public function attemptLogin(array $credentials): AuthAttemptStatus
+    public function attemptLogin(array $credentials, $request): AuthAttemptStatus
     {
         $user = $this->userProvider->getByCredentials($credentials);
 
@@ -72,7 +79,7 @@ class AuthService
             return AuthAttemptStatus::TWO_FACTOR_AUTH;
         }
 
-        $this->logIn($user);
+        $this->logIn($user, $request);
 
         return AuthAttemptStatus::SUCCESS;
     }
@@ -80,6 +87,7 @@ class AuthService
     public function logOut(): void
     {
         $this->session->remove('user');
+        $this->session->remove('userEntity');
         $this->session->migrate(true);
 
         $this->user = null;
