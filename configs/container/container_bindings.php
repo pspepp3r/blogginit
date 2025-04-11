@@ -21,6 +21,7 @@ use Src\Classes\RouteEntityBindingStrategy;
 use Src\Validators\RequestValidatorFactory;
 use Symfony\Component\Mailer\MailerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
+use Src\Classes\EntrypointLookupCollection as ClassesEntrypointLookupCollection;
 use Symfony\Bridge\Twig\Extension\AssetExtension;
 use Symfony\Component\Mime\BodyRendererInterface;
 use Symfony\WebpackEncoreBundle\Asset\TagRenderer;
@@ -107,7 +108,7 @@ return [
     ),
 
     'webpack_encore.tag_renderer' => fn(Container $container) => new TagRenderer(
-        new EntrypointLookupCollection($container, 'webpack_encore.entrypoint'),
+        new ClassesEntrypointLookupCollection($container, 'webpack_encore.entrypoint'),
         $container->get('webpack_encore.packages')
     ),
 
