@@ -1,4 +1,4 @@
-const ajax = (url, method = 'get', data = {}, domElement = null) => {
+const ajax = async (url, method = 'get', data = {}, domElement = null) => {
     method = method.toLowerCase()
 
     let options = {
@@ -35,23 +35,20 @@ const ajax = (url, method = 'get', data = {}, domElement = null) => {
         url += '?' + (new URLSearchParams(data)).toString();
     }
 
-    return fetch(url, options).then(response => {
-        if (domElement) {
-            clearValidationErrors(domElement)
+    const response = await fetch(url, options)
+    if (domElement) {
+        clearValidationErrors(domElement)
+    }
+    if (!response.ok) {
+        if (response.status === 422) {
+            response.json().then(errors => {
+                handleValidationErrors(errors, domElement)
+            })
+        } else if (response.status === 404) {
+            alert(response.statusText)
         }
-
-        if (! response.ok) {
-            if (response.status === 422) {
-                response.json().then(errors => {
-                    handleValidationErrors(errors, domElement)
-                })
-            } else if (response.status === 404) {
-                alert(response.statusText)
-            }
-        }
-
-        return response
-    })
+    }
+    return response
 }
 
 const get  = (url, data) => ajax(url, 'get', data)

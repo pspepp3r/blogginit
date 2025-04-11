@@ -1,10 +1,10 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-namespace App\Mail;
+namespace Src\Mails;
 
-use App\Entity\PasswordReset;
+use Src\Entities\PasswordReset;
 use Src\Services\ConfigService;
 use Src\Services\SignedUrlService;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -18,10 +18,9 @@ class ForgotPasswordEmail
         private readonly MailerInterface $mailer,
         private readonly BodyRendererInterface $renderer,
         private readonly SignedUrlService $signedUrl
-    ) {
-    }
+    ) {}
 
-    public function send(\Src\Entities\PasswordReset $passwordReset): void
+    public function send(PasswordReset $passwordReset): void
     {
         $email   = $passwordReset->getEmail();
         $resetLink = $this->signedUrl->fromRoute(
@@ -32,8 +31,8 @@ class ForgotPasswordEmail
         $message = (new TemplatedEmail())
             ->from($this->config->get('mailer.from'))
             ->to($email)
-            ->subject('Your Blogginit Password Reset Instructions')
-            ->htmlTemplate('emails/password_reset.html.twig')
+            ->subject('Your Blogginit Password Reset Link')
+            ->htmlTemplate('emails/reset_password.html.twig')
             ->context(
                 [
                     'resetLink' => $resetLink,

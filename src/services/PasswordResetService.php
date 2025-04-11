@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Services;
+namespace Src\Services;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Src\Entities\PasswordReset;
@@ -54,15 +55,9 @@ class PasswordResetService
             ->where('pr.token = :token')
             ->andWhere('pr.isActive = :active')
             ->andWhere('pr.expiration > :now')
-            ->setParameters(
-                new ArrayCollection(
-                    [
-                        'token'  => $token,
-                        'active' => true,
-                        'now'    => new \DateTime(),
-                    ]
-                )
-            )
+            ->setParameter('token', $token)
+            ->setParameter('active', true)
+            ->setParameter('now', new DateTime())
             ->getQuery()
             ->getOneOrNullResult();
     }

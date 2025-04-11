@@ -1,14 +1,14 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Src\Controllers;
 
 use Slim\Views\Twig;
 use Src\Providers\UserProvider;
-use App\Mail\ForgotPasswordEmail;
+use Src\Mails\ForgotPasswordEmail;
 use Src\Errors\ValidationException;
-use App\Services\PasswordResetService;
+use Src\Services\PasswordResetService;
 use Src\Validators\ResetPasswordRequestValidator;
 use Src\Validators\ForgotPasswordRequestValidator;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -23,10 +23,9 @@ class PasswordResetController
         private readonly UserProvider $userProvider,
         private readonly PasswordResetService $passwordResetService,
         private readonly ForgotPasswordEmail $forgotPasswordEmail
-    ) {
-    }
+    ) {}
 
-    public function showForgotPasswordForm(Response $response): Response
+    public function renderForgotPasswordForm(Response $response): Response
     {
         return $this->twig->render($response, 'auth/forgot_password.twig');
     }
@@ -50,7 +49,7 @@ class PasswordResetController
         return $response;
     }
 
-    public function showResetPasswordForm(Response $response, array $args): Response
+    public function renderResetPasswordForm(Response $response, array $args): Response
     {
         $passwordReset = $this->passwordResetService->findByToken($args['token']);
 

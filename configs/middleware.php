@@ -23,6 +23,7 @@ return function (App $app) {
     $app->add(HttpSpecializedErrorMiddleware::class);
     $app->add(StartSessionsMiddleware::class);
 
+    $app->addBodyParsingMiddleware();
     $app->addErrorMiddleware(
         (bool) $config->get('error_handling.display_error_details'),
         (bool) $config->get('error_handling.log_errors'),
