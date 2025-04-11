@@ -61,6 +61,12 @@ return [
 
     ConfigService::class => new ConfigService(require CONFIG_PATH . '/app.php'),
 
+    'csrf'                                  => fn(ResponseFactoryInterface $responseFactory, Csrf $csrf) => new Guard(
+        $responseFactory,
+        failureHandler: $csrf->failureHandler(),
+        persistentTokenMode: true
+    ),
+
     EntityManager::class => function ($connection, $ORMConfig, ConfigService $configService): EntityManager {
 
         $connection = DriverManager::getConnection($configService->get('db'));
