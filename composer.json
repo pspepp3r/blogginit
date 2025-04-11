@@ -36,7 +36,9 @@
         "itsgoingd/clockwork": "^5.3",
         "league/flysystem": "^3.29",
         "league/mime-type-detection": "^1.16",
-        "twig/intl-extra": "^3.20"
+        "twig/intl-extra": "^3.20",
+        "slim/csrf": "^1.5",
+        "symfony/mailtrap-mailer": "^7.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.5"
