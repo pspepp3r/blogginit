@@ -23,8 +23,10 @@ class StartSessionsMiddleware implements MiddlewareInterface
     ) {}
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $this->session->setName($this->config->get('session.name'));
-        $this->session->start();
+        if (!$this->session->isStarted()) {
+            $this->session->setName($this->config->get('session.name'));
+            $this->session->start();
+        }
         $this->sessionService->storeSession(
             $request->getServerParams()['HTTP_USER_AGENT'],
             $request->getServerParams()['REMOTE_ADDR']

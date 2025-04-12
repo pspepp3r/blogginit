@@ -1,20 +1,19 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Src\Middlewares;
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 use Src\Services\ConfigService;
+use Src\Errors\LinkSignatureException;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 class ValidateSignatureMiddleware implements MiddlewareInterface
 {
-    public function __construct(private readonly ConfigService $config)
-    {
-    }
+    public function __construct(private readonly ConfigService $config) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -29,7 +28,7 @@ class ValidateSignatureMiddleware implements MiddlewareInterface
         $signature = hash_hmac('sha256', $url, $this->config->get('app.app_key'));
 
         if ($expiration <= time() || ! hash_equals($signature, $originalSignature)) {
-            throw new \RuntimeException('Failed to verify signature');
+            throw new LinkSignatureException('Failed to verify signature');
         }
 
         return $handler->handle($request);

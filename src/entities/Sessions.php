@@ -23,6 +23,12 @@ class Sessions
     #[Column('user_agent')]
     private string $userAgent;
 
+    #[Column('address', nullable: true)]
+    private string $address;
+
+    #[Column('countryFlag', nullable: true)]
+    private string $countryFlag;
+
     #[Column('last_action')]
     private DateTime $lastAction;
 
@@ -60,6 +66,30 @@ class Sessions
     public function setUserAgent(string $userAgent): static
     {
         $this->userAgent = $userAgent;
+
+        return $this;
+    }
+
+    public function getAddress(): string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): static
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getCountryFlag(): string
+    {
+        return $this->countryFlag;
+    }
+
+    public function setCountryFlag(string $countryFlag): static
+    {
+        $this->countryFlag = $countryFlag;
 
         return $this;
     }
