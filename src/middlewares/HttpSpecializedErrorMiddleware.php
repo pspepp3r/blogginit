@@ -12,6 +12,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Exception\HttpSpecializedException;
 use Psr\Http\Message\ResponseFactoryInterface;
+use Src\Errors\LinkSignatureException;
 
 class HttpSpecializedErrorMiddleware implements MiddlewareInterface
 {
@@ -29,6 +30,12 @@ class HttpSpecializedErrorMiddleware implements MiddlewareInterface
 
             return $this->responseFactory->createResponse(302)
             ->withHeader('Location', "/error?code=$code&message=$message");
+        } catch (LinkSignatureException $l){
+            $code = (string) $l->getCode();
+            $message = $l->getMessage();
+
+            return $this->responseFactory->createResponse(302)
+                ->withHeader('Location', "/error?code=$code&message=$message");
         }
     }
 }
