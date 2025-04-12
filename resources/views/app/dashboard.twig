@@ -1,46 +1,50 @@
 {% extends 'app/layout/layout.twig' %}
 
 {% block title %}
-    Blogginit | Dashboard
+	Blogginit | Dashboard
+{% endblock %}
+
+{% block page_title %}
+	Dashboard
+{% endblock %}
+
+
+{% block page_description %}
+	Welcome to your dashboard!
 {% endblock %}
 
 {% block content %}
-    
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h1 class="text-primary">Dashboard</h1>
-                <p class="text-secondary">Welcome to your dashboard!</p>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-md-4">
-                <div class="card border-primary">
-                    <div class="card-body">
-                        <h5 class="card-title text-primary">Statistics</h5>
-                        <p class="card-text text-secondary">View your latest stats here.</p>
-                        <a href="#" class="btn btn-primary">View Stats</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card border-primary">
-                    <div class="card-body">
-                        <h5 class="card-title text-primary">Manage Posts</h5>
-                        <p class="card-text text-secondary">Create, edit, or delete your posts.</p>
-                        <a href="#" class="btn btn-primary">Manage Posts</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card border-primary">
-                    <div class="card-body">
-                        <h5 class="card-title text-primary">Settings</h5>
-                        <p class="card-text text-secondary">Update your account settings.</p>
-                        <a href="#" class="btn btn-primary">Go to Settings</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="container mt-5">
+		<div class="row mt-4">
+			<div class="col-md-4">
+				<div class="card border-primary">
+					<div class="card-body">
+						<h5 class="card-title text-primary">Statistics</h5>
+						<p class="card-text text-secondary">View the latest stats for your blog posts here.</p>
+						<a href="#" class="btn btn-primary">View Stats</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="card border-primary">
+					<div class="card-body">
+						<h5 class="card-title text-primary">Manage Posts</h5>
+						<p class="card-text text-secondary">Create, edit, or delete your posts.</p>
+						<a href="#" class="btn btn-primary">Manage Posts</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="card border-primary">
+					<div class="card-body">
+						<h5 class="card-title text-primary">Settings</h5>
+						<p class="card-text text-secondary">Update your account settings.</p>
+						<a href="#" class="btn btn-primary">Go to Settings</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 {% endblock %}

@@ -4,7 +4,50 @@
 	Blogginit | Dashboard
 {% endblock %}
 
+{% block page_title %}
+	Statistics
+{% endblock %}
+
+
+{% block page_description %}
+	Monitor your blogs!
+{% endblock %}
+
 {% block content %}
+	<div class="container mt-5">
+		<div class="row mt-4">
+			<div class="col-md-4">
+				<div class="card border-primary">
+					<div class="card-body">
+						<h5 class="card-title text-primary">Report 1</h5>
+						<p class="card-text text-secondary">Summary of report 1</p>
+						<a href="#" class="btn btn-primary">View Stats</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="card border-primary">
+					<div class="card-body">
+						<h5 class="card-title text-primary">Report 2</h5>
+						<p class="card-text text-secondary">Summary of report 2</p>
+						<a href="#" class="btn btn-primary">View Stats</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="card border-primary">
+					<div class="card-body">
+						<h5 class="card-title text-primary">Report 3</h5>
+						<p class="card-text text-secondary">Summary of report 3</p>
+						<a href="#" class="btn btn-primary">View Stats</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
 
     {# <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
@@ -25,37 +68,3 @@
         </div>
     </nav> #}
 
-    <div class="container mt-5">
-        <h1 class="text-center text-primary mb-4">Reports</h1>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Report 1</h5>
-                        <p class="card-text">Summary of Report 1.</p>
-                        <a href="#" class="btn btn-primary">View Report</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Report 2</h5>
-                        <p class="card-text">Summary of Report 2.</p>
-                        <a href="#" class="btn btn-primary">View Report</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Report 3</h5>
-                        <p class="card-text">Summary of Report 3.</p>
-                        <a href="#" class="btn btn-primary">View Report</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-{% endblock %}
