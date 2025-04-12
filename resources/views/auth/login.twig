@@ -8,6 +8,7 @@
 	<div class="card shadow-sm p-4 mx-auto my-5" style="max-width: 400px; width: 100%;">
 		<h1 class="h4 text-center mb-4">Login to Blogginit</h1>
 		<form action="/login" method="POST">
+        {{csrf.fields | raw}}
 			<div class="mb-3">
 				<label for="email" class="form-label">Email Address</label>
 				<input type="email" id="email" name="email" class="form-control {{ errors.email ? 'is-invalid' : '' }}" value="{{ old.email }}" required>
