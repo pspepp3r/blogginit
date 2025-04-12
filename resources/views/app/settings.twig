@@ -49,8 +49,8 @@
 				<small class="form-text text-muted">Leave blank if you don't want to change your password.</small>
 			</div>
             <div class="mb-3">
-                <input type="checkbox" class="form-check-input" name="2faEnable" id="2faEnable" {% if user.two_factor %}checked{% endif %}>
-                <label for="2fa" class="form-check-label">Use Two Factor Authentication on next login</label>
+                <input type="checkbox" class="form-check-input" name="2faEnable" id="2faEnable" {% if user.hasTwoFactorAuthEnabled()  %}checked="true"{% endif %}>
+                <label for="2faEnable" class="form-check-label">Use Two Factor Authentication on next login</label>
             </div>
 			<button type="submit" class="btn btn-primary update-security-btn">Save Changes</button>
 		</form>

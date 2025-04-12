@@ -34,4 +34,13 @@ class SettingsController
 
         return $response;
     }
+
+    public function handleSecuritySettings(Request $request, Response $response): Response
+    {
+        $data = $request->getParsedBody();
+
+        $this->settingsService->updateSecurity($data['password'], $data['2faEnable']);
+
+        return $response;
+    }
 }

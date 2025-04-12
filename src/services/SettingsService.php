@@ -13,6 +13,7 @@ class SettingsService
 {
     public function __construct(
         private readonly EntityManager $entityManager,
+        private readonly HashService $hashService,
         private readonly SessionInterface $sessionInterface,
         private readonly UserProvider $userProvider
     ) {}
@@ -31,6 +32,30 @@ class SettingsService
         }
         if ($email) {
             $user->setEmail($email);
+        }
+
+        $this->sessionInterface->set('userEntity', $user);
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+    }
+
+    public function updateSecurity(?string $password, ?string $is2fa): void
+    {
+        /**
+         * @var int
+         */
+        $userId = $this->sessionInterface->get('user');
+
+        $user = $this->userProvider->getById($userId);
+
+        if($password){
+            $user->setPassword($this->hashService->hashPassword($password)); }
+
+        if($is2fa){
+            $user->setTwoFactor(true);
+        } else {
+            $user->setTwoFactor(false);
         }
 
         $this->sessionInterface->set('userEntity', $user);

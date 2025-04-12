@@ -67,5 +67,6 @@ return function (App $app): void {
         });
 
         $group->post('/update-profile-settings', [SettingsController::class, 'handleProfileSettings']);
+        $group->post('/update-security-settings', [SettingsController::class, 'handleSecuritySettings']);
     })->add(VerifyEmailMiddleware::class)->add(AuthMiddleware::class);
 };
