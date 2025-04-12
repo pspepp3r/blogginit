@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use ipinfo\ipinfo\IPinfo;
 use Slim\App;
 use DI\Container;
 use Slim\Csrf\Guard;
@@ -33,8 +34,6 @@ use Src\Contracts\RequestValidatorFactoryInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\WebpackEncoreBundle\Asset\EntrypointLookup;
 use Symfony\WebpackEncoreBundle\Twig\EntryFilesTwigExtension;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupCollection;
 use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
 
 return [
@@ -79,6 +78,8 @@ return [
         $entityManager = new EntityManager($connection, $ORMConfig);
         return $entityManager;
     },
+
+    IPinfo::class => fn(ConfigService $config) => new IPinfo($config->get('ipinfo.access_token')),
 
     MailerInterface::class                  => function (ConfigService $config) {
         if ($config->get('mailer.driver') === 'log') {

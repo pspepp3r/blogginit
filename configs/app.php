@@ -64,8 +64,14 @@ return [
 
     'mailer' => [
 
-        'dsn' => $_ENV['MAILER_DSN'],
+        'dsn' => $_ENV['MAILER_LOCAL_DSN'],
         'from' => $_ENV['MAILER_FROM'],
+
+    ],
+
+    'ipinfo' => [
+
+        'access_token' => $_ENV['IPINFO_TOKEN']
 
     ]
 
