@@ -5,17 +5,23 @@ declare(strict_types=1);
 use Slim\App;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
-use Src\Middlewares\ValidationExceptionMiddleware;
 use Src\Services\ConfigService;
+use Src\Middlewares\CsrfFieldsMiddleware;
 use Src\Middlewares\StartSessionsMiddleware;
-use Src\Middlewares\HttpSpecializedErrorMiddleware;
+use Slim\Middleware\MethodOverrideMiddleware;
 use Src\Middlewares\ValidationErrorMiddleware;
+use Src\Middlewares\ValidationExceptionMiddleware;
+use Src\Middlewares\HttpSpecializedErrorMiddleware;
 
 return function (App $app) {
 
     $container = $app->getContainer();
     $config = $container->get(ConfigService::class);
 
+
+    $app->add(MethodOverrideMiddleware::class);
+    $app->add(CsrfFieldsMiddleware::class);
+    $app->add('csrf');
     $app->addMiddleware(TwigMiddleware::create($app, $container
         ->get(Twig::class)));
     $app->add(ValidationExceptionMiddleware::class);

@@ -35,7 +35,6 @@ class StartSessionsMiddleware implements MiddlewareInterface
         if ($request->getMethod() === 'GET' && ! $this->requestService->isXhr($request)) {
             $this->session->set('previousUrl', (string) $request->getUri());
         }
-
         $this->session->save();
 
         return $response;

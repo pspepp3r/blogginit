@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 use Slim\App;
 use DI\Container;
+use Slim\Csrf\Guard;
 use Slim\Views\Twig;
 use Doctrine\ORM\ORMSetup;
 use Slim\Factory\AppFactory;
 use Doctrine\ORM\EntityManager;
+use Src\Classes\Csrf;
 use Src\Services\ConfigService;
 use Doctrine\DBAL\DriverManager;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Twig\Extra\Intl\IntlExtension;
 use Symfony\Component\Asset\Package;
 use Symfony\Component\Mailer\Mailer;
@@ -94,7 +98,13 @@ return [
 
     RouteParserInterface::class             => fn(App $app) => $app->getRouteCollector()->getRouteParser(),
 
-    SessionInterface::class => fn(Container $container) => $container->get(Session::class),
+    SessionInterface::class => fn(ConfigService $config) => new Session(new NativeSessionStorage([
+                'cookie_lifetime' => 2592000,
+                'cookie_httponly' => $config->get('session.httponly'),
+                'cookie_secure' => $config->get('session.secure'),
+                'cookie_samesite' => $config->get('session.samesite')
+            ])),
+
 
     Twig::class => function (Container $container, ConfigService $configService): Twig {
 

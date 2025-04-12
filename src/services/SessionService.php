@@ -17,6 +17,7 @@ class SessionService
         private readonly SessionInterface $session,
         private readonly SessionProvider $sessionProvider,
     ) {}
+    
     public function storeSession(string $userAgent, string $IpAddress)
     {
         $session = $this->sessionProvider->findById(
