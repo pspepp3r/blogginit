@@ -23,6 +23,7 @@ Encore
     .addEntry("main", "./resources/js/main.js")
     .addEntry("forgot_password", "./resources/js/forgot_password.js")
     .addEntry("verify", "./resources/js/verify.js")
+    .addEntry("settings", "./resources/js/settings.js")
 
   // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
   // .enableStimulusBridge('./assets/controllers.json')

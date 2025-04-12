@@ -56,5 +56,16 @@ return function (App $app): void {
     $app->group('', function (RouteCollectorProxy $group) {
         $group->get('/dashboard', [DashboardController::class, 'index']);
         $group->get('/reports', [BlogController::class, 'renderReports']);
+        $group->get('/settings', [SettingsController::class, 'index']);
+        $group->get('/collaborations', [CollaborationsController::class, 'index']);
+
+        $group->group('/abstract', function (RouteCollectorProxy $abstract) {
+            $abstract->get('/about', [AbstractController::class, 'renderAbout']);
+            $abstract->get('/help', [AbstractController::class, 'renderHelp']);
+            $abstract->get('/privacy', [AbstractController::class, 'renderPrivacy']);
+            $abstract->get('/tos', [AbstractController::class, 'renderServiceTerms']);
+        });
+
+        $group->post('/update-profile-settings', [SettingsController::class, 'handleProfileSettings']);
     })->add(VerifyEmailMiddleware::class)->add(AuthMiddleware::class);
 };

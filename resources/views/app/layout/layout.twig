@@ -12,15 +12,12 @@
 		{% block stylesheets %}
 
 			{{ encore_entry_link_tags('main') }}
-			{{ encore_entry_link_tags('sidebar') }}
 
 		{% endblock %}
 
 		{% block javascript %}
 
 			{{ encore_entry_script_tags('main') }}
-			{{ encore_entry_script_tags('sidebar') }}
-
 
 		{% endblock %}
 
@@ -32,7 +29,7 @@
 
 	<body class="bg-light">
 
-		<nav class="bg-white navbar navbar-light px-5 border-bottom border-secondary-subtle">
+		<nav class="bg-white navbar navbar-light px-5 border-bottom border-secondary-subtle position-fixed w-100 z-3">
 			<div class="container">
 				<a class="navbar-brand" href="/">Blogginit</a>
 
@@ -51,7 +48,7 @@
 								</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="/help"><i class="bi bi-question-circle-fill me-1 text-primary"></i>Help</a>
+								<a class="dropdown-item" href="/abstract/help"><i class="bi bi-question-circle-fill me-1 text-primary"></i>Help</a>
 							</li>
 							<li>
 								<form action="/logout" method="post">
@@ -66,12 +63,12 @@
 			</div>
 		</nav>
 
-		<div class="container">
-			<div class="row">
+		<div class="container pt-5">
+			<div class="row mt-2">
 				<div class="col-sm-12 col-md-3 mt-2">
-					<div class="card border-secondary-subtle">
+					<div class="card border-secondary-subtle position-fixed">
 						<div class="card-body">
-							<h5 class="card-title text-primary">More Contents</h5>
+							<h5 class="card-title text-primary">Quick Access</h5>
                             <ul class="list-group">
                                 <li class="list-unstyled mb-3">
                                     <a href="/dashboard">Dashboard</a>
@@ -84,19 +81,23 @@
                                 </li>
                                 <hr>
                                 <li class="list-unstyled mb-3">
-                                    <a href="/about">About</a>
+                                    <a href="/abstract/about">About</a>
                                 </li>
                                 <li class="list-unstyled mb-3">
-                                    <a href="/tos">Terms of Service</a>
+                                    <a href="/abstract/tos">Terms of Service</a>
                                 </li>
                                 <li class="list-unstyled mb-3">
-                                    <a href="/privacy">Privacy Policy</a>
+                                    <a href="/abstract/privacy">Privacy Policy</a>
                                 </li>
                             </ul>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-12 col-md-9 column">
+				<div class="col-sm-12 col-md-9 column mb-4">
+                    <div class="alert alert-primary alert-dismissible fade show" style="display: none;" role="alert">
+                        <p class="alert-text"></p>
+                        {# <button class="btn-close" data-bs-dismiss="alert"></button> #}
+                    </div>
 					<div class="container">
 						<div class="ms-3">
 							<h1 class="text-primary"> {% block page_title %}{% endblock %}
@@ -109,7 +110,7 @@
 						</div>
 					</div>
 				</div>
-			</body>
-		</html>
-	</div>
-</body></html>
+            </div>
+        </div>
+    </body>
+</html>
