@@ -37,6 +37,11 @@ class AuthController
         return $this->twig->render($response, 'auth/register.twig', $args);
     }
 
+    public function renderTwoFactorLoginForm(Response $response): Response
+    {
+        return $this->twig->render($response, 'auth/2fa.twig');
+    }
+
     public function register(Request $request, Response $response): Response
     {
         $data = $this->requestValidatorFactory->make(UserRegistrationRequestValidator::class)->validate(
@@ -48,7 +53,7 @@ class AuthController
             $request
         );
 
-        return $response->withHeader('Location', '/dashboard')->withStatus(302);
+        return $this->responseFormatter->asJson($response, []);
     }
 
     public function login(Request $request, Response $response): Response
@@ -67,14 +72,7 @@ class AuthController
             return $this->responseFormatter->asJson($response, ['two_factor' => true]);
         }
 
-        return $response->withHeader('Location', '/dashboard')->withStatus(302);
-    }
-
-    public function logOut(Response $response): Response
-    {
-        $this->authService->logOut();
-
-        return $response->withHeader('Location', '/')->withStatus(302);
+        return $this->responseFormatter->asJson($response, []);
     }
 
     public function twoFactorLogin(Request $request, Response $response): Response
@@ -88,5 +86,12 @@ class AuthController
         }
 
         return $response;
+    }
+
+    public function logOut(Response $response): Response
+    {
+        $this->authService->logOut();
+
+        return $response->withHeader('Location', '/')->withStatus(302);
     }
 }

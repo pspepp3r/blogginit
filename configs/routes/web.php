@@ -10,9 +10,12 @@ use Src\Middlewares\GuestMiddleware;
 use Slim\Routing\RouteCollectorProxy;
 use Src\Controllers\VerifyController;
 use Src\Controllers\LandingController;
+use Src\Controllers\AbstractController;
+use Src\Controllers\SettingsController;
 use Src\Controllers\DashboardController;
 use Src\Middlewares\VerifyEmailMiddleware;
 use Src\Controllers\PasswordResetController;
+use Src\Controllers\CollaborationsController;
 use Src\Middlewares\ValidateSignatureMiddleware;
 
 return function (App $app): void {
@@ -22,51 +25,59 @@ return function (App $app): void {
 
     $app->group('', function (RouteCollectorProxy $guest) {
         $guest->get('/', [LandingController::class, 'index']);
-        $guest->get('/login', [AuthController::class, 'renderLogin']);
-        $guest->get('/register', [AuthController::class, 'renderRegister']);
-        $guest->get('/forgot-password', [PasswordResetController::class, 'renderForgotPasswordForm']);
-        $guest->get('/reset-password/{token}', [PasswordResetController::class, 'renderResetPasswordForm'])
-            ->setName('password-reset')
-            ->add(ValidateSignatureMiddleware::class);
+        $guest->group('', function (RouteCollectorProxy $auth) {
+            $auth->get('/login', [AuthController::class, 'renderLogin']);
+            $auth->get('/register', [AuthController::class, 'renderRegister']);
+            $auth->get('/forgot-password', [PasswordResetController::class, 'renderForgotPasswordForm']);
+            $auth->get('/reset-password/{token}', [PasswordResetController::class, 'renderResetPasswordForm'])
+                ->setName('password-reset')
+                ->add(ValidateSignatureMiddleware::class);
+            $auth->get('/two-factor-form', [AuthController::class, 'renderTwoFactorLoginForm']);
 
-        $guest->post('/login', [AuthController::class, 'login']);
-        $guest->post('/register', [AuthController::class, 'register']);
-        $guest->post('/login/two-factor', [AuthController::class, 'twoFactorLogin'])
-            ->setName('twoFactorLogin');
+            $auth->post('/register', [AuthController::class, 'register']);
+            $auth->group('/login', function (RouteCollectorProxy $login) {
+                $login->post('', [AuthController::class, 'login']);
+                $login->post('/two-factor', [AuthController::class, 'twoFactorLogin'])
+                    ->setName('twoFactorLogin');
+                // ->add(RateLimitMiddleware::class);
+            });
+            $auth->post('/forgot-password', [PasswordResetController::class, 'handleForgotPasswordRequest'])
+                ->setName('handleForgotPassword');
             // ->add(RateLimitMiddleware::class);
-        $guest->post('/forgot-password', [PasswordResetController::class, 'handleForgotPasswordRequest'])
-            ->setName('handleForgotPassword');
+            $auth->post('/reset-password/{token}', [PasswordResetController::class, 'resetPassword'])
+                ->setName('resetPassword');
             // ->add(RateLimitMiddleware::class);
-        $guest->post('/reset-password/{token}', [PasswordResetController::class, 'resetPassword'])
-            ->setName('resetPassword');
-            // ->add(RateLimitMiddleware::class);
+        });
     })->add(GuestMiddleware::class);
 
-    $app->group('', function (RouteCollectorProxy $group) {
-        $group->get('/verify', [VerifyController::class, 'index']);
-        $group->get('/verify/{id}/{hash}', [VerifyController::class, 'verify'])
-        ->setName('verify')
-        ->add(ValidateSignatureMiddleware::class);
-        $group->post('/logout', [AuthController::class, 'logOut']);
-        $group->post('/verify', [VerifyController::class, 'resend'])
+    $app->group('/verify', function (RouteCollectorProxy $mail) {
+        $mail->get('', [VerifyController::class, 'index']);
+        $mail->get('/{id}/{hash}', [VerifyController::class, 'verify'])
+            ->setName('verify')
+            ->add(ValidateSignatureMiddleware::class);
+        $mail->post('', [VerifyController::class, 'resend'])
             ->setName('resendVerification');
-            // ->add(RateLimitMiddleware::class);
+        // ->add(RateLimitMiddleware::class);
     })->add(AuthMiddleware::class);
 
-    $app->group('', function (RouteCollectorProxy $group) {
-        $group->get('/dashboard', [DashboardController::class, 'index']);
-        $group->get('/reports', [BlogController::class, 'renderReports']);
-        $group->get('/settings', [SettingsController::class, 'index']);
-        $group->get('/collaborations', [CollaborationsController::class, 'index']);
 
-        $group->group('/abstract', function (RouteCollectorProxy $abstract) {
+    $app->group('', function (RouteCollectorProxy $main) {
+        $main->get('/collaborations', [CollaborationsController::class, 'index']);
+        $main->get('/dashboard', [DashboardController::class, 'index']);
+        $main->get('/profile', [DashboardController::class, 'renderProfile']);
+        $main->get('/reports', [BlogController::class, 'renderReports']);
+        $main->get('/settings', [SettingsController::class, 'index']);
+
+        $main->group('/abstract', function (RouteCollectorProxy $abstract) {
             $abstract->get('/about', [AbstractController::class, 'renderAbout']);
             $abstract->get('/help', [AbstractController::class, 'renderHelp']);
             $abstract->get('/privacy', [AbstractController::class, 'renderPrivacy']);
             $abstract->get('/tos', [AbstractController::class, 'renderServiceTerms']);
         });
 
-        $group->post('/update-profile-settings', [SettingsController::class, 'handleProfileSettings']);
-        $group->post('/update-security-settings', [SettingsController::class, 'handleSecuritySettings']);
+        $main->post('/update-profile-settings', [SettingsController::class, 'handleProfileSettings']);
+        $main->post('/update-security-settings', [SettingsController::class, 'handleSecuritySettings']);
+
+        $main->post('/logout', [AuthController::class, 'logOut']);
     })->add(VerifyEmailMiddleware::class)->add(AuthMiddleware::class);
 };

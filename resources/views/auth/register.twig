@@ -1,5 +1,11 @@
 {% extends "auth/layout/layout.twig" %}
 
+{% block javascript %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('auth') }}
+
+{% endblock %}
+
 {% block title %}Blogginit | Register{% endblock %}
 
 {% block content %}
@@ -35,7 +41,7 @@
                     {{ errors.confirmPassword | first }}
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Register</button>
+            <button type="button" class="btn btn-primary w-100 register-btn">Register</button>
         </form>
 		<div class="text-center mt-3">
 			<p class="mb-0">Already have an account?

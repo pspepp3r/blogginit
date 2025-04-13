@@ -3,6 +3,12 @@
 {% block title %}Blogginit | Login
 {% endblock %}
 
+{% block javascript %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('auth') }}
+
+{% endblock %}
+
 {% block content %}
 
 	<div class="card shadow-sm p-4 mx-auto my-5" style="max-width: 400px; width: 100%;">
@@ -23,7 +29,7 @@
 					{{ errors.password | first }}
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary w-100">Login</button>
+			<button type="button" class="btn btn-primary w-100 login-btn">Login</button>
 		</form>
 		<div class="text-center mt-3">
 			<p class="mb-0">
