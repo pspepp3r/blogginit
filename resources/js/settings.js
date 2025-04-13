@@ -9,7 +9,7 @@ window.addEventListener('DOMContentLoaded', function () {
         updateProfileBtn.addEventListener('click', function (e) {
             e.preventDefault();
 
-            addLoader(this);
+            addLoader(this, 'Save Changes');
 
             const form = this.closest('form')
             const formData = new FormData(form);
@@ -27,7 +27,7 @@ window.addEventListener('DOMContentLoaded', function () {
         updateSecurityBtn.addEventListener('click', function (e) {
             e.preventDefault();
 
-            addLoader(this);
+            addLoader(this, 'Save Changes');
 
             const form = this.closest('form')
             const formData = new FormData(form);
@@ -35,7 +35,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
             post(form.action, data, form).then(response => {
                 if (response.ok) {
-                    bootstrapAlert('Profile settings updated!');
+                    bootstrapAlert('Security settings updated!', 'Save Changes');
                 }
             });
         });

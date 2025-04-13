@@ -1,7 +1,7 @@
 {% extends 'app/layout/layout.twig' %}
 
 {% block title %}
-	Blogginit | Dashboard
+	Blogginit | Reports
 {% endblock %}
 
 {% block page_title %}
@@ -15,6 +15,19 @@
 
 {% block content %}
 	<div class="container mt-5">
+		<div class="">
+			<div class="card border-primary">
+				<div class="card-body">
+					<h5 class="card-title text-primary">General Reports</h5>
+                    <hr>
+
+					<p class="card-text text-secondary">Total Blog Posts: 3</p>
+					<p class="card-text text-secondary">Total Blog Likes: 27</p>
+					<p class="card-text text-secondary">Total Blog Views: 316</p>
+					<p class="card-text text-secondary">Average Blog Views: 71</p>
+				</div>
+			</div>
+		</div>
 		<div class="row mt-4">
 			<div class="col-md-4">
 				<div class="card border-primary">
@@ -49,7 +62,7 @@
 
 {% endblock %}
 
-    {# <nav class="navbar navbar-expand-lg navbar-light bg-light">
+{# <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Blogginit</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,4 +80,3 @@
             </div>
         </div>
     </nav> #}
-

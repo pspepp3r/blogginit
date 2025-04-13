@@ -25,7 +25,7 @@
 	<div class="container mt-5">
 		<p class="lead">Profile</p>
 		<hr>
-		<form method="POST" action="/settings/update-profile-settings" enctype="multipart/form-data">
+		<form method="POST" action="/update-profile-settings" enctype="multipart/form-data">
 			<div class="mb-3">
 				<label for="username" class="form-label">Username</label>
 				<input type="text" class="form-control" id="username" name="name" value="{{ user.name }}" required>
@@ -42,7 +42,7 @@
 		</form>
 		<p class="lead mt-4">Security</p>
 		<hr>
-		<form method="POST" action="/settings/update-security-settings">
+		<form method="POST" action="/update-security-settings">
 			<div class="mb-3">
 				<label for="password" class="form-label">New Password</label>
 				<input type="password" class="form-control" id="password" name="password">

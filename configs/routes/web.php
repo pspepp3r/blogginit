@@ -19,30 +19,28 @@ use Src\Controllers\CollaborationsController;
 use Src\Middlewares\ValidateSignatureMiddleware;
 
 return function (App $app): void {
+    // Homepage
+
     $app->get('/error', [LandingController::class, 'error']);
 
     $app->group('', function (RouteCollectorProxy $guest) {
         $guest->get('/', [LandingController::class, 'index']);
-
         $guest->group('', function (RouteCollectorProxy $auth) {
+            $auth->get('/login', [AuthController::class, 'renderLogin']);
             $auth->get('/register', [AuthController::class, 'renderRegister']);
             $auth->get('/forgot-password', [PasswordResetController::class, 'renderForgotPasswordForm']);
             $auth->get('/reset-password/{token}', [PasswordResetController::class, 'renderResetPasswordForm'])
-            ->setName('password-reset')
-            ->add(ValidateSignatureMiddleware::class);
+                ->setName('password-reset')
+                ->add(ValidateSignatureMiddleware::class);
             $auth->get('/two-factor-form', [AuthController::class, 'renderTwoFactorLoginForm']);
 
             $auth->post('/register', [AuthController::class, 'register']);
-
             $auth->group('/login', function (RouteCollectorProxy $login) {
-                $login->get('', [AuthController::class, 'renderLogin']);
-                
                 $login->post('', [AuthController::class, 'login']);
                 $login->post('/two-factor', [AuthController::class, 'twoFactorLogin'])
                     ->setName('twoFactorLogin');
                 // ->add(RateLimitMiddleware::class);
             });
-
             $auth->post('/forgot-password', [PasswordResetController::class, 'handleForgotPasswordRequest'])
                 ->setName('handleForgotPassword');
             // ->add(RateLimitMiddleware::class);
@@ -68,12 +66,7 @@ return function (App $app): void {
         $main->get('/dashboard', [DashboardController::class, 'index']);
         $main->get('/profile', [DashboardController::class, 'renderProfile']);
         $main->get('/reports', [BlogController::class, 'renderReports']);
-
-        $main->group('/settings', function (RouteCollectorProxy $settings) {
-            $settings->get('', [SettingsController::class, 'index']);
-            $settings->post('/update-profile-settings', [SettingsController::class, 'handleProfileSettings']);
-            $settings->post('/update-security-settings', [SettingsController::class, 'handleSecuritySettings']);
-        });
+        $main->get('/settings', [SettingsController::class, 'index']);
 
         $main->group('/abstract', function (RouteCollectorProxy $abstract) {
             $abstract->get('/about', [AbstractController::class, 'renderAbout']);
@@ -82,6 +75,8 @@ return function (App $app): void {
             $abstract->get('/tos', [AbstractController::class, 'renderServiceTerms']);
         });
 
+        $main->post('/update-profile-settings', [SettingsController::class, 'handleProfileSettings']);
+        $main->post('/update-security-settings', [SettingsController::class, 'handleSecuritySettings']);
 
         $main->post('/logout', [AuthController::class, 'logOut']);
     })->add(VerifyEmailMiddleware::class)->add(AuthMiddleware::class);
