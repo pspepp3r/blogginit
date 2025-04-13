@@ -25,6 +25,9 @@ class Blog
     #[Id, Column(options: ['unsigned' => true]), GeneratedValue]
     private int $id;
 
+    #[Column(unique: true, options: ['unsigned' => true])]
+    private string $uuid;
+
     #[Column]
     private string $title;
 
@@ -49,6 +52,9 @@ class Blog
     #[ManyToOne(inversedBy: 'blogs')]
     private User $user;
 
+    #[ManyToOne(inversedBy: 'blogs')]
+    private Category $category;
+
     public function __construct() {
         $this->comments = new ArrayCollection();
     }
@@ -56,6 +62,17 @@ class Blog
     public function getId(): int
     {
         return $this->id;
+    }
+    public function getUUId(): string
+    {
+        return $this->uuid;
+    }
+
+    public function setUUId(string $uuid): static
+    {
+        $this->uuid = $uuid;
+
+        return $this;
     }
 
     public function getTitle(): string
@@ -151,6 +168,19 @@ class Blog
     {
         $this->user = $user;
         $user->addBlog($this);
+
+        return $this;
+    }
+
+    public function getCategory(): Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(Category $category): static
+    {
+        $this->category = $category;
+        $category->addBlog($this);
 
         return $this;
     }

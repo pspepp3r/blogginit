@@ -77,6 +77,7 @@ return function (App $app): void {
 
         $main->group('/blogs', function (RouteCollectorProxy $blogs) {
             $blogs->get('', [BlogsController::class, 'renderBlogs']);
+            $blogs->get('/create', [BlogsController::class, 'renderCreateBlog']);
         });
 
         $main->group('/reports', function (RouteCollectorProxy $reports) {
