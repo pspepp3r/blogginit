@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 use Slim\App;
 use Src\Controllers\AuthController;
-use Src\Controllers\BlogController;
+use Src\Controllers\BlogsController;
 use Src\Middlewares\AuthMiddleware;
 use Src\Middlewares\GuestMiddleware;
 use Slim\Routing\RouteCollectorProxy;
 use Src\Controllers\ExtrasController;
 use Src\Controllers\VerifyController;
 use Src\Controllers\LandingController;
+use Src\Controllers\ReportsController;
+use Src\Middlewares\NeutralMiddleware;
 use Src\Controllers\SettingsController;
 use Src\Controllers\DashboardController;
 use Src\Middlewares\VerifyEmailMiddleware;
 use Src\Controllers\PasswordResetController;
 use Src\Controllers\CollaborationsController;
-use Src\Middlewares\NeutralMiddleware;
 use Src\Middlewares\ValidateSignatureMiddleware;
 
 return function (App $app): void {
@@ -73,11 +74,21 @@ return function (App $app): void {
         $main->get('/collaborations', [CollaborationsController::class, 'index']);
         $main->get('/dashboard', [DashboardController::class, 'index']);
         $main->get('/profile', [DashboardController::class, 'renderProfile']);
-        $main->get('/reports', [BlogController::class, 'renderReports']);
-        $main->get('/settings', [SettingsController::class, 'index']);
 
-        $main->post('/update-profile-settings', [SettingsController::class, 'handleProfileSettings']);
-        $main->post('/update-security-settings', [SettingsController::class, 'handleSecuritySettings']);
+        $main->group('/blogs', function (RouteCollectorProxy $blogs) {
+            $blogs->get('', [BlogsController::class, 'renderBlogs']);
+        });
+
+        $main->group('/reports', function (RouteCollectorProxy $reports) {
+            $reports->get('', [ReportsController::class, 'renderReports']);
+        });
+
+        $main->group('/settings', function (RouteCollectorProxy $settings) {
+            $settings->get('', [SettingsController::class, 'index']);
+
+            $settings->post('/update-profile-settings', [SettingsController::class, 'handleProfileSettings']);
+            $settings->post('/update-security-settings', [SettingsController::class, 'handleSecuritySettings']);
+        });
 
         $main->post('/logout', [AuthController::class, 'logOut']);
     })->add(VerifyEmailMiddleware::class)->add(AuthMiddleware::class);

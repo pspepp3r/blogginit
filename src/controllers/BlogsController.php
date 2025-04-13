@@ -9,7 +9,7 @@ use Src\Services\BlogService;
 use Psr\Http\Message\ResponseInterface as Response;
 
 
-class BlogController
+class BlogsController
 {
     public function __construct(
         private readonly BlogService $blogService,
@@ -17,19 +17,15 @@ class BlogController
     ) {
     }
 
-    public function renderReports(Response $response, array $args): Response
+    public function renderBlogs(Response $response, array $args): Response
     {
+
         $user = $this->twig->getEnvironment()->getGlobals()['user'];
 
         $args = [
-            'totalBlogPosts' => $this->blogService->totalBlogs($user),
-            'totalBlogTicks' => $this->blogService->totalTicks($user),
-            'totalBlogViews' => $this->blogService->totalViews($user),
-            'averageBlogViews' => $this->blogService->averageViews($user),
-
             'blogs' => $this->blogService->allBlogs($user)
         ];
 
-        return $this->twig->render($response, 'app/reports.twig', $args);
+        return $this->twig->render($response, 'app/blogs.twig', $args);
     }
 }

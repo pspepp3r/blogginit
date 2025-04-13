@@ -1,0 +1,40 @@
+{% extends 'app/layout/layout.twig' %}
+
+{% block title %}
+	Blogginit | Manage
+{% endblock %}
+
+{% block page_title %}
+	Blog Manager
+{% endblock %}
+
+
+{% block page_description %}
+	Manage your blogs!
+{% endblock %}
+
+{% block content %}
+	<div class="container mt-5">
+		<div class="row mt-4">
+			{% if blogs %}
+				<div class="col-md-4">
+					<div class="card border-primary">
+						<div class="card-body">
+							<h5 class="card-title text-primary">Report 1</h5>
+							<p class="card-text text-secondary">Summary of report 1</p>
+							<a href="#" class="btn btn-primary">View Stats</a>
+						</div>
+					</div>
+				</div>
+		{% else %}
+			<div class="row">
+				<div class="col-12 text-center">
+					<h1 class="lead alert alert-warning" role="alert">No Blogs Found</h1>
+				</div>
+				<a href="#" class="btn btn-primary bg-gradient px-2 col-4 ms-5">Create your first blog</a>
+			</div>
+
+		{% endif %}
+
+	</div>
+{% endblock %}
