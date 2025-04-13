@@ -20,6 +20,7 @@
 
 	<div class="card shadow-sm p-4 mx-auto my-5" style="max-width: 400px; width: 100%;">
 		<h1 class="h4 text-center">Enter Your PIN</h1>
+        <p>Check your email for a 6-code verification code</p>
 		<form action="/login/two-factor" method="POST">
 			{{csrf.fields | raw}}
 			<div class="container mt-5 mb-4">

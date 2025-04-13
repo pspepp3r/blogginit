@@ -2,7 +2,7 @@
 
 {% block javascript %}
 
-    {{ parent() }}
+	{{ parent() }}
 	{{ encore_entry_script_tags('settings') }}
 
 {% endblock %}
@@ -48,12 +48,45 @@
 				<input type="password" class="form-control" id="password" name="password">
 				<small class="form-text text-muted">Leave blank if you don't want to change your password.</small>
 			</div>
-            <div class="mb-3">
-                <input type="checkbox" class="form-check-input" name="2faEnable" id="2faEnable" {% if user.hasTwoFactorAuthEnabled()  %}checked="true"{% endif %}>
-                <label for="2faEnable" class="form-check-label">Use Two Factor Authentication on next login</label>
-            </div>
+			<div class="mb-3">
+				<input type="checkbox" class="form-check-input" name="2faEnable" id="2faEnable" {% if user.hasTwoFactorAuthEnabled() %} checked="true" {% endif %}>
+				<label for="2faEnable" class="form-check-label">Use Two Factor Authentication on next login</label>
+			</div>
 			<button type="submit" class="btn btn-primary update-security-btn">Save Changes</button>
 		</form>
+
+		<p class="lead mt-4">Display</p>
+		<hr>
+		<div class="mb-3">
+			<form method="POST" action="/update-security-settings">
+				<div class="mb-3 row">
+					<div class="card bg-light border-primary col mx-2">
+						<input type="radio" name="theme" id="theme" value="light" checked>
+						<div class="card-body">
+							<h5 class="card-title text-primary">Light</h5>
+							<p class="card-text text-secondary"></p>
+						</div>
+					</div>
+					<div class="card bg-dark border-light col mx-2">
+						<input type="radio" name="theme" id="theme" value="dark">
+						<div class="card-body">
+							<h5 class="card-title text-light">Dark</h5>
+							<p class="card-text text-secondary"></p>
+						</div>
+					</div>
+				</div>
+				<button type="button" class="btn btn-primary update-theme-btn">Save Changes</button>
+			</form>
+		</div>
+
+		<p class="lead mt4">Account</p>
+		<hr>
+		<div class="mb-3">
+			<p>Manage your account</p>
+			<a href="#" class="btn btn-primary">Download Account Data</a>
+			<a href="#" class="btn btn-outline-danger">Reset Account</a>
+			<a href="#" class="btn btn-danger">Delete Account</a>
+		</div>
 	</div>
 
 {% endblock %}
