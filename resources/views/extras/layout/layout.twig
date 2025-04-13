@@ -33,6 +33,7 @@
 			<div class="container">
 				<a class="navbar-brand" href="/">Blogginit</a>
 
+                {% if user %}
 				<div class="profile-dropdown">
 					<div class="dropdown">
 						<button class="btn btn-primary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -63,6 +64,7 @@
 						</ul>
 					</div>
 				</div>
+                {% endif %}
 
 			</div>
 		</nav>
@@ -74,6 +76,7 @@
 						<div class="card-body">
 							<h5 class="card-title text-primary">Quick Access</h5>
 							<ul class="list-group">
+                            {% if user %}
 								<li class="list-unstyled mb-3">
 									<a href="/dashboard">Dashboard</a>
 								</li>
@@ -83,6 +86,14 @@
 								<li class="list-unstyled mb-3">
 									<a href="/settings">Settings</a>
 								</li>
+                            {% else %}
+								<li class="list-unstyled mb-3">
+									<a href="/login">Login</a>
+								</li>
+								<li class="list-unstyled mb-3">
+									<a href="/register">Register</a>
+								</li>
+                            {% endif %}
 								<hr>
 								<li class="list-unstyled mb-3">
 									<a href="/extra/about">About</a>
@@ -97,7 +108,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-12 col-md-9 column mb-4">
+                <div class="col-sm-12 col-md-9 column mb-4">
 					<div class="alert alert-primary alert-dismissible fade show" style="display: none;" role="alert">
 						<p class="alert-text"></p>
 						{# <button class="btn-close" data-bs-dismiss="alert"></button> #}
@@ -114,7 +125,14 @@
 						</div>
 					</div>
 				</div>
-			</body>
-		</html>
-	</div>
-</div></body></html>
+			</div>
+		</div>
+                {% if user == null %}
+                    <footer class="bg-primary text-white p-2 text-center fixed-bottom">
+                        <div class="container">
+                            <p>&copy; {{ 'now' | date('Y') }} Blogginit. All rights reserved.</p>
+                        </div>
+                    </footer>
+                {% endif %}
+	</body>
+</html>

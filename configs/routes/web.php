@@ -8,20 +8,28 @@ use Src\Controllers\BlogController;
 use Src\Middlewares\AuthMiddleware;
 use Src\Middlewares\GuestMiddleware;
 use Slim\Routing\RouteCollectorProxy;
+use Src\Controllers\ExtrasController;
 use Src\Controllers\VerifyController;
 use Src\Controllers\LandingController;
-use Src\Controllers\AbstractController;
 use Src\Controllers\SettingsController;
 use Src\Controllers\DashboardController;
 use Src\Middlewares\VerifyEmailMiddleware;
 use Src\Controllers\PasswordResetController;
 use Src\Controllers\CollaborationsController;
+use Src\Middlewares\NeutralMiddleware;
 use Src\Middlewares\ValidateSignatureMiddleware;
 
 return function (App $app): void {
     // Homepage
 
     $app->get('/error', [LandingController::class, 'error']);
+
+    $app->group('/extra', function (RouteCollectorProxy $extra) {
+        $extra->get('/about', [ExtrasController::class, 'renderAbout']);
+        $extra->get('/help', [ExtrasController::class, 'renderHelp']);
+        $extra->get('/privacy', [ExtrasController::class, 'renderPrivacy']);
+        $extra->get('/services', [ExtrasController::class, 'renderServiceTerms']);
+    })->add(NeutralMiddleware::class);
 
     $app->group('', function (RouteCollectorProxy $guest) {
         $guest->get('/', [LandingController::class, 'index']);
@@ -67,13 +75,6 @@ return function (App $app): void {
         $main->get('/profile', [DashboardController::class, 'renderProfile']);
         $main->get('/reports', [BlogController::class, 'renderReports']);
         $main->get('/settings', [SettingsController::class, 'index']);
-
-        $main->group('/abstract', function (RouteCollectorProxy $abstract) {
-            $abstract->get('/about', [AbstractController::class, 'renderAbout']);
-            $abstract->get('/help', [AbstractController::class, 'renderHelp']);
-            $abstract->get('/privacy', [AbstractController::class, 'renderPrivacy']);
-            $abstract->get('/tos', [AbstractController::class, 'renderServiceTerms']);
-        });
 
         $main->post('/update-profile-settings', [SettingsController::class, 'handleProfileSettings']);
         $main->post('/update-security-settings', [SettingsController::class, 'handleSecuritySettings']);
