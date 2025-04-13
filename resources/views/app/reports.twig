@@ -19,44 +19,58 @@
 			<div class="card border-primary">
 				<div class="card-body">
 					<h5 class="card-title text-primary">General Reports</h5>
-                    <hr>
+					<hr>
 
-					<p class="card-text text-secondary">Total Blog Posts: 3</p>
-					<p class="card-text text-secondary">Total Blog Likes: 27</p>
-					<p class="card-text text-secondary">Total Blog Views: 316</p>
-					<p class="card-text text-secondary">Average Blog Views: 71</p>
+					<p class="card-text text-secondary">Total Blog Posts:
+						{{ totalBlogPosts}}</p>
+					<p class="card-text text-secondary">Total Blog Ticks:
+						{{totalBlogTicks}}</p>
+					<p class="card-text text-secondary">Total Blog Views:
+						{{totalBlogViews}}</p>
+					<p class="card-text text-secondary">Average Blog Views:
+						{{averageBlogViews}}</p>
 				</div>
 			</div>
 		</div>
 		<div class="row mt-4">
-			<div class="col-md-4">
-				<div class="card border-primary">
-					<div class="card-body">
-						<h5 class="card-title text-primary">Report 1</h5>
-						<p class="card-text text-secondary">Summary of report 1</p>
-						<a href="#" class="btn btn-primary">View Stats</a>
+			{% if blogs %}
+				<div class="col-md-4">
+					<div class="card border-primary">
+						<div class="card-body">
+							<h5 class="card-title text-primary">Report 1</h5>
+							<p class="card-text text-secondary">Summary of report 1</p>
+							<a href="#" class="btn btn-primary">View Stats</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card border-primary">
+						<div class="card-body">
+							<h5 class="card-title text-primary">Report 2</h5>
+							<p class="card-text text-secondary">Summary of report 2</p>
+							<a href="#" class="btn btn-primary">View Stats</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card border-primary">
+						<div class="card-body">
+							<h5 class="card-title text-primary">Report 3</h5>
+							<p class="card-text text-secondary">Summary of report 3</p>
+							<a href="#" class="btn btn-primary">View Stats</a>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<div class="card border-primary">
-					<div class="card-body">
-						<h5 class="card-title text-primary">Report 2</h5>
-						<p class="card-text text-secondary">Summary of report 2</p>
-						<a href="#" class="btn btn-primary">View Stats</a>
-					</div>
+		{% else %}
+			<div class="row">
+				<div class="col-12 text-center">
+					<h1 class="lead alert alert-warning" role="alert">No Blogs Found</h1>
 				</div>
+                <a href="#" class="btn btn-primary bg-gradient px-2 col-4 ms-5">Create your first blog</a>
 			</div>
-			<div class="col-md-4">
-				<div class="card border-primary">
-					<div class="card-body">
-						<h5 class="card-title text-primary">Report 3</h5>
-						<p class="card-text text-secondary">Summary of report 3</p>
-						<a href="#" class="btn btn-primary">View Stats</a>
-					</div>
-				</div>
-			</div>
-		</div>
+
+		{% endif %}
 	</div>
 
 
