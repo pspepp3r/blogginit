@@ -20,16 +20,16 @@ class ExtrasController
 
     public function renderHelp(Response $response, array $args): Response
     {
-        return $this->twig->render($response, 'app/help.twig', $args);
+        return $this->twig->render($response, 'extras/help.twig', $args);
     }
 
     public function renderPrivacy(Response $response, array $args): Response
     {
-        return $this->twig->render($response, 'app/privacy.twig', $args);
+        return $this->twig->render($response, 'extras/privacy.twig', $args);
     }
 
     public function renderServiceTerms(Response $response, array $args): Response
     {
-        return $this->twig->render($response, 'app/services.twig', $args);
+        return $this->twig->render($response, 'extras/services.twig', $args);
     }
 }
