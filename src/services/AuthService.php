@@ -94,7 +94,8 @@ class AuthService
 
         $user = $this->userProvider->getById($userId);
 
-        if (! $user || $user->getEmail() !== $data['email']) {
+        if (! $user ) {
+            // || $user->getEmail() !== $data['email']
             return false;
         }
 

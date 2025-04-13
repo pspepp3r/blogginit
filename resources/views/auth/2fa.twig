@@ -1,0 +1,51 @@
+{% extends "auth/layout/layout.twig" %}
+
+{% block title %}Blogginit | Login
+{% endblock %}
+
+{% block javascript %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('auth') }}
+
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('auth') }}
+
+{% endblock %}
+
+{% block content %}
+
+
+	<div class="card shadow-sm p-4 mx-auto my-5" style="max-width: 400px; width: 100%;">
+		<h1 class="h4 text-center">Enter Your PIN</h1>
+		<form action="/login/two-factor" method="POST">
+			{{csrf.fields | raw}}
+			<div class="container mt-5 mb-4">
+				<div class="row justify-content-center">
+					<div class="col-12 me-5">
+						<div class="d-flex justify-content-between">
+							<input type="text" maxlength="1" class="pin-input" onfocus="this.select()">
+							<input type="text" maxlength="1" class="pin-input" onfocus="this.select()" disabled>
+							<input type="text" maxlength="1" class="pin-input" onfocus="this.select()" disabled>
+							<input type="text" maxlength="1" class="pin-input" onfocus="this.select()" disabled>
+							<input type="text" maxlength="1" class="pin-input" onfocus="this.select()" disabled>
+							<input type="text" maxlength="1" class="pin-input" onfocus="this.select()" disabled>
+						</div>
+					</div>
+				</div>
+			</div>
+			<input type="hidden" name="code">
+			<div class="invalid-feedback">
+				{{ errors.code | first }}
+			</div>
+			<button type="button" class="btn btn-primary w-100 two-fa-login-btn">Login</button>
+		</form>
+		{# <div class="text-center mt-3">
+									<p class="mb-0">
+										<a href="/login" class="text-primary">Resend code</a></p>
+								</div> #}
+	</div>
+
+{% endblock %}

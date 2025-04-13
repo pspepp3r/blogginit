@@ -1,6 +1,6 @@
 import { Alert, Modal } from "bootstrap";
 
-const addLoader = (domElement) => {
+const addLoader = (domElement, afterText) => {
 
     const loaderDiv = document.createElement('div');
 
@@ -17,7 +17,7 @@ const addLoader = (domElement) => {
     domElement.setAttribute('disabled', 'disabled')
     setInterval(() => {
         domElement.removeAttribute('disabled');
-        domElement.textContent = "Save Changes";
+        domElement.textContent = afterText;
     }, 3000);
 }
 
