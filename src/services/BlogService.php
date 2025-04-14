@@ -15,26 +15,42 @@ class BlogService
 
     public function totalBlogs(User $user): int
     {
-        return $this->blogProvider->countTotalBlogs($user);
+        return count($this->allBlogs($user));
     }
 
     public function totalTicks(User $user): int
     {
-        return $this->blogProvider->countTotalTicks($user);
+        $totalTicks = 0;
+
+        $blogs = $this->allBlogs($user);
+
+        foreach ($blogs as $blog) {
+            $totalTicks += $blog->getTicks();
+        }
+
+        return $totalTicks;
     }
 
     public function totalViews(User $user): int
     {
-        return $this->blogProvider->countTotalViews($user);
+        $totalViews = 0;
+
+        $blogs = $this->allBlogs($user);
+
+        foreach ($blogs as $blog) {
+            $totalViews += $blog->getViews();
+        }
+
+        return $totalViews;
     }
 
     public function averageViews(User $user): float|int
     {
-        return $this->blogProvider->countAverageViews($user);
+        return $this->totalViews($user) / $this->totalBlogs($user);
     }
 
     public function allBlogs(User $user): array
     {
-        return $this->blogProvider->getAllBlogs($user);
+        return $this->blogProvider->getByUser($user);
     }
 }

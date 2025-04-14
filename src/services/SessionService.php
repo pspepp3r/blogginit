@@ -17,10 +17,10 @@ class SessionService
         private readonly SessionInterface $session,
         private readonly SessionProvider $sessionProvider,
     ) {}
-    
+
     public function storeSession(string $userAgent, string $IpAddress)
     {
-        $session = $this->sessionProvider->findById(
+        $session = $this->sessionProvider->getById(
             $this->session->getId()
         );
 
@@ -40,6 +40,6 @@ class SessionService
 
     public function getSession(User $user): Sessions|null
     {
-        return $this->sessionProvider->findByUser($user->getId());
+        return $this->sessionProvider->getByUser($user->getId());
     }
 }

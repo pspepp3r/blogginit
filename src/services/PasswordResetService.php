@@ -46,7 +46,7 @@ class PasswordResetService
             ->execute();
     }
 
-    public function findByToken(string $token): ?PasswordReset
+    public function getByToken(string $token): ?PasswordReset
     {
         return $this->entityManager
             ->getRepository(PasswordReset::class)

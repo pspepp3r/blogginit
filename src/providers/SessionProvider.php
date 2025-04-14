@@ -16,12 +16,12 @@ class SessionProvider
         private readonly EntityManager $entityManager,
         private readonly SessionInterface $session
     ) {}
-    public function findById(string $id): Sessions|null
+    public function getById(string $id): Sessions|null
     {
         return $this->entityManager->find(Sessions::class, $id);
     }
 
-    public function findByUser(int $user): Sessions|null
+    public function getByUser(int $user): Sessions|null
     {
         return $this->entityManager->getRepository(Sessions::class)
             ->findOneBy(['user_id' => $user]);
