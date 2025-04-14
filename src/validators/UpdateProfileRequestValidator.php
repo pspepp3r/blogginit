@@ -19,13 +19,7 @@ class UpdateProfileRequestValidator implements RequestValidatorInterface
     {
         $v = new Validator($data);
 
-        $v->rule('required', ['email', 'name'])->message('Required field');
-        $v->rule('email', 'email');
-        $v->rule(
-            fn($field, $value, $params, $fields) => !$this->entityManager->getRepository(User::class)
-                ->count(['email' => $value, 'name' => $data['name']]),
-            'email'
-        )->message('User with the given email address already exists');
+        $v->rule('required', ['name'])->message('Required field');
 
         if (! $v->validate()) {
             throw new ValidationException($v->errors());

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Src\Services;
 
 use Doctrine\ORM\EntityManager;
+use Src\Data_objects\UpdateUserData;
 use Src\Entities\User;
 use Src\Providers\UserProvider;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -17,22 +18,41 @@ class SettingsService
         private readonly SessionInterface $sessionInterface,
         private readonly UserProvider $userProvider
     ) {}
-    public function updateProfile(?string $name, ?string $email): void
+    public function updateProfile(UpdateUserData $data): void
     {
         /**
          * @var int
          */
         $userId = $this->sessionInterface->get('user');
 
+        /**
+         * @var User
+         */
         $user = $this->userProvider->getById($userId);
 
+        if ($data->name) {
+            $user->setName($data->name);
+        }
 
-        if ($name) {
-            $user->setName($name);
+        if ($data->gender) {
+            $user->setGender($data->gender);
         }
-        if ($email) {
-            $user->setEmail($email);
+
+        if ($data->introduction) {
+            $user->setIntroduction($data->introduction);
         }
+
+        if ($data->country) {
+            $user->setLocation($data->country);
+        }
+
+        if ($data->occupation) {
+            $user->setOccupation($data->occupation);
+        }
+
+        // if ($data->profile_picture) {
+        //     $user->setPicture($data->profile_picture);
+        // }
 
         $this->sessionInterface->set('userEntity', $user);
 

@@ -17,6 +17,7 @@ use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\PreUpdate;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
+use Src\Enums\ColorScheme;
 
 #[Entity, Table('users')]
 #[HasLifecycleCallbacks]
@@ -37,8 +38,23 @@ class User
     #[Column(nullable: true)]
     private string $picture;
 
+    #[Column(nullable: true)]
+    private string $gender;
+
+    #[Column(nullable: true)]
+    private string $occupation = '';
+
+    #[Column(nullable: true)]
+    private string $location = '';
+
+    #[Column(nullable: true)]
+    private string $introduction = '';
+
+    #[Column('color_scheme', enumType: ColorScheme::class, options: ['default' => 'light'])]
+    private ColorScheme $colorScheme;
+
     #[Column('two_factor',  options: ['default' => false])]
-    private bool $twoFactor;
+    private bool $twoFactor = false;
 
     #[Column('verified_at', nullable: true)]
     private ?DateTime $verifiedAt;
@@ -55,11 +71,13 @@ class User
     #[OneToMany(Sessions::class, 'user', ['persist', 'remove'])]
     private Collection $sessions;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->blogs = new ArrayCollection();
         $this->sessions = new ArrayCollection();
 
-        $this->twoFactor = false;
+        $this->colorScheme = ColorScheme::Light;
+        $this->gender = 'male';
     }
 
     #[PrePersist, PreUpdate]
@@ -125,6 +143,54 @@ class User
         return $this;
     }
 
+    public function getGender(): string
+    {
+        return $this->gender;
+    }
+
+    public function setGender(string $gender): static
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    public function getOccupation(): string
+    {
+        return $this->occupation;
+    }
+
+    public function setOccupation(string $occupation): static
+    {
+        $this->occupation = $occupation;
+
+        return $this;
+    }
+
+    public function getLocation(): string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(string $location): static
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    public function getIntroduction(): string
+    {
+        return $this->introduction;
+    }
+
+    public function setIntroduction(string $introduction): static
+    {
+        $this->introduction = $introduction;
+
+        return $this;
+    }
+
     public function hasTwoFactorAuthEnabled(): bool
     {
         return $this->twoFactor;
@@ -157,6 +223,18 @@ class User
     public function addBlog(Blog $blog): static
     {
         $this->blogs->add($blog);
+
+        return $this;
+    }
+
+    public function getColorScheme(): ColorScheme
+    {
+        return $this->colorScheme;
+    }
+
+    public function setColorScheme($colorScheme): static
+    {
+        $this->colorScheme = $colorScheme;
 
         return $this;
     }

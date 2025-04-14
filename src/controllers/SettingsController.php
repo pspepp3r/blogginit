@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Src\Controllers;
 
 use Slim\Views\Twig;
+use Src\Data_objects\UpdateUserData;
 use Src\Services\SettingsService;
 use Src\Validators\UpdateProfileRequestValidator;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -30,7 +31,17 @@ class SettingsController
             $request->getParsedBody()
         );
 
-        $this->settingsService->updateProfile($data['name'], $data['email']);
+        $this->settingsService->updateProfile(
+            new UpdateUserData(
+                $data['name'],
+                $data['gender'],
+                $data['occupation'],
+                $data['location'],
+                $data['introduction'],
+                null
+                // $data['profile_picture'],
+            ),
+        );
 
         return $response;
     }

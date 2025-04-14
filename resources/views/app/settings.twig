@@ -30,13 +30,28 @@
 				<label for="username" class="form-label">Username</label>
 				<input type="text" class="form-control" id="username" name="name" value="{{ user.name }}" required>
 			</div>
+            <div class="mb-3">
+                <label for="gender" class="form-label">Gender</label>
+                <select class="form-select" id="gender" name="gender" required>
+                    <option value="male" {% if user.gender == 'male' %} selected {% endif %}>Male </option>
+                    <option value="female" {% if user.gender == 'female' %} selected {% endif %}>Female</option>
+                </select>
+            </div>
 			<div class="mb-3">
-				<label for="email" class="form-label">Email Address</label>
-				<input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+				<label for="occupation" class="form-label">Occupation</label>
+				<input type="text" class="form-control" id="occupation" name="occupation" value="{{ user.occupation }}">
+			</div>
+			<div class="mb-3">
+				<label for="location" class="form-label">Country</label>
+				<input type="text" class="form-control" id="location" name="location" value="{{ user.location }}" required>
+			</div>
+			<div class="mb-3">
+				<label for="introduction" class="form-label">Introduction</label>
+                <textarea name="introduction" id="introduction" class="form-control">{{ user.introduction }}</textarea>
 			</div>
 			<div class="mb-3">
 				<label for="profilePicture" class="form-label">Profile Picture</label>
-				<input type="file" class="form-control" id="profilePicture" name="profile_picture">
+				<input type="file" class="form-control" id="profilePicture" name="profile_picture" disabled>
 			</div>
 			<button type="button" class="btn btn-primary update-profile-btn">Save Changes</button>
 		</form>
@@ -58,7 +73,7 @@
 		<p class="lead mt-4">Display</p>
 		<hr>
 		<div class="mb-3">
-			<form method="POST" action="/settings/update-display-settings">
+        <form method="POST" action="/settings/update-display-settings">
 				<div class="mb-3 row">
 					<div class="card bg-light border-primary col mx-2">
 						<input type="radio" name="theme" id="theme" value="light" checked>
