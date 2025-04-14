@@ -33,18 +33,20 @@
 			</div>
 		</div>
 		<div class="row mt-4">
-			{% if blogs %}
-				<div class="col-md-4">
-					<div class="card border-primary">
-						<div class="card-body">
-							<h5 class="card-title text-primary">Report 1</h5>
-							<p class="card-text text-secondary">Summary of report 1</p>
-							<a href="#" class="btn btn-primary">View Stats</a>
-						</div>
-					</div>
+            {% for blog in blogs %}
+
+            <div class="col-md-4 mb-3">
+				<div class="card border-primary">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">{{blog.title}}</h5>
+                        <p class="card-text text-secondary">T: {{blog.ticks}} V: {{blog.views}}</p>
+                        <a href="#" class="btn btn-primary">View Stats</a>
+                    </div>
 				</div>
 			</div>
-		{% else %}
+
+            {% else %}
+
 			<div class="row">
 				<div class="col-12 text-center">
 					<h1 class="lead alert alert-warning" role="alert">No Blogs Found</h1>
@@ -52,27 +54,9 @@
                 <a href="blogs/create" class="btn btn-primary bg-gradient px-2 col-4 ms-5">Create your first blog</a>
 			</div>
 
-		{% endif %}
+            {% endfor %}
+        </div>
 	</div>
 
 
 {% endblock %}
-
-{# <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Blogginit</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/reports">Reports</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav> #}

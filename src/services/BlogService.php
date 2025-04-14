@@ -46,7 +46,10 @@ class BlogService
 
     public function averageViews(User $user): float|int
     {
-        return $this->totalViews($user) / $this->totalBlogs($user);
+        if ($this->totalBlogs($user))
+            return $this->totalViews($user) / $this->totalBlogs($user);
+
+        return 0;
     }
 
     public function allBlogs(User $user): array

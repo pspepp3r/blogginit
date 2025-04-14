@@ -16,25 +16,30 @@
 {% block content %}
 	<div class="container mt-5">
 		<div class="row mt-4">
-			{% if blogs %}
-				<div class="col-md-4">
-					<div class="card border-primary">
-						<div class="card-body">
-							<h5 class="card-title text-primary">Report 1</h5>
-							<p class="card-text text-secondary">Summary of report 1</p>
-							<a href="#" class="btn btn-primary">View Stats</a>
-						</div>
-					</div>
+            {% for blog in blogs %}
+
+            <div class="col-md-4 mb-3">
+				<div class="card border-primary">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">{{blog.title}}</h5>
+                        <p class="card-text text-secondary">T: {{blog.ticks}} V: {{blog.views}}</p>
+                        <a href="#" class="btn btn-primary"><i class="bi bi-eye-fill"></i></a>
+                        <a href="#" class="btn btn-primary"><i class="bi bi-pen-fill"></i></a>
+                        <a href="#" class="btn btn-primary"><i class="bi bi-trash-fill"></i></a>
+                    </div>
 				</div>
-		{% else %}
+			</div>
+
+            {% else %}
+
 			<div class="row">
 				<div class="col-12 text-center">
 					<h1 class="lead alert alert-warning" role="alert">No Blogs Found</h1>
 				</div>
-				<a href="/blogs/create" class="btn btn-primary bg-gradient px-2 col-4 ms-5">Create your first blog</a>
+                <a href="blogs/create" class="btn btn-primary bg-gradient px-2 col-4 ms-5">Create your first blog</a>
 			</div>
 
-		{% endif %}
-
+            {% endfor %}
+	    </div>
 	</div>
 {% endblock %}
