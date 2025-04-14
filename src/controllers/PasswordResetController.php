@@ -51,7 +51,7 @@ class PasswordResetController
 
     public function renderResetPasswordForm(Response $response, array $args): Response
     {
-        $passwordReset = $this->passwordResetService->findByToken($args['token']);
+        $passwordReset = $this->passwordResetService->getByToken($args['token']);
 
         if (! $passwordReset) {
             return $response->withHeader('Location', '/')->withStatus(302);
@@ -66,7 +66,7 @@ class PasswordResetController
             $request->getParsedBody()
         );
 
-        $passwordReset = $this->passwordResetService->findByToken($args['token']);
+        $passwordReset = $this->passwordResetService->getByToken($args['token']);
 
         if (! $passwordReset) {
             throw new ValidationException(['confirmPassword' => ['Invalid token']]);
