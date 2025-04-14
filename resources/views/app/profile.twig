@@ -1,0 +1,52 @@
+{% extends 'app/layout/layout.twig' %}
+
+{% block title %}
+	Blogginit | Profile
+{% endblock %}
+
+{% block page_title %}
+	Profile
+{% endblock %}
+
+
+{% block page_description %}
+	View your profile!
+{% endblock %}
+
+{% block content %}
+	<div class="container mt-5">
+    {# <h1 class="lead text-danger">This page is still in development, please come back later to view your profile.</h1> #}
+        <div class="">
+			<div class="card border-primary mb-4">
+				<div class="card-body">
+					<h5 class="card-title text-primary">About me</h5>
+					<hr>
+
+					<p class="card-text text-secondary">Name:
+						{{ user.name}}</p>
+					<p class="card-text text-secondary">Occupation:
+						{{user.occupation}}</p>
+					<p class="card-text text-secondary">Location:
+						{{user.location}}</p>
+					<p class="card-text text-secondary">Introduction:
+						{{user.introduction}}</p>
+				</div>
+			</div>
+			<div class="card border-primary">
+				<div class="card-body">
+                    <h5 class="card-title text-primary">Blogs</h5>
+					<hr>
+					<p class="card-text text-secondary">Blog Page:
+						</p>
+					<p class="card-text text-secondary">Blogger since:
+						{{user.joined_at | date('M Y')}}</p>
+					<p class="card-text text-secondary">Profile Views:
+						</p>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+{% endblock %}
+

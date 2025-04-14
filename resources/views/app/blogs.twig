@@ -16,8 +16,8 @@
 {% block content %}
 	<div class="container mt-5">
 		<div class="row mt-4">
+        {% if blogs %}
             {% for blog in blogs %}
-
             <div class="col-md-4 mb-3">
 				<div class="card border-primary">
                     <div class="card-body">
@@ -29,17 +29,24 @@
                     </div>
 				</div>
 			</div>
-
+            {% endfor %}
+            <div class="col-md-4 mb-3">
+				<div class="card border-primary">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Create a new blog</h5>
+                        <a href="#" class="btn btn-primary"><i class="bi bi-plus-circle-fill"></i></a>
+                    </div>
+				</div>
+			</div>
             {% else %}
-
 			<div class="row">
 				<div class="col-12 text-center">
 					<h1 class="lead alert alert-warning" role="alert">No Blogs Found</h1>
 				</div>
                 <a href="blogs/create" class="btn btn-primary bg-gradient px-2 col-4 ms-5">Create your first blog</a>
 			</div>
+        {% endif %}
 
-            {% endfor %}
 	    </div>
 	</div>
 {% endblock %}
