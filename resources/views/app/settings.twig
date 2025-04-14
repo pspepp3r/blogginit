@@ -25,7 +25,7 @@
 	<div class="container mt-5">
 		<p class="lead">Profile</p>
 		<hr>
-		<form method="POST" action="/update-profile-settings" enctype="multipart/form-data">
+		<form method="POST" action="/settings/update-profile-settings" enctype="multipart/form-data">
 			<div class="mb-3">
 				<label for="username" class="form-label">Username</label>
 				<input type="text" class="form-control" id="username" name="name" value="{{ user.name }}" required>
@@ -42,7 +42,7 @@
 		</form>
 		<p class="lead mt-4">Security</p>
 		<hr>
-		<form method="POST" action="/update-security-settings">
+		<form method="POST" action="/settings/update-security-settings">
 			<div class="mb-3">
 				<label for="password" class="form-label">New Password</label>
 				<input type="password" class="form-control" id="password" name="password">
@@ -58,19 +58,19 @@
 		<p class="lead mt-4">Display</p>
 		<hr>
 		<div class="mb-3">
-			<form method="POST" action="/update-display-settings">
+			<form method="POST" action="/settings/update-display-settings">
 				<div class="mb-3 row">
 					<div class="card bg-light border-primary col mx-2">
 						<input type="radio" name="theme" id="theme" value="light" checked>
 						<div class="card-body">
-							<h5 class="card-title text-primary">Light</h5>
+							<h5 class="card-title text-primary">Light <i class="bi bi-sun"></i></h5>
 							<p class="card-text text-secondary"></p>
 						</div>
 					</div>
 					<div class="card bg-dark border-light col mx-2">
 						<input type="radio" name="theme" id="theme" value="dark">
 						<div class="card-body">
-							<h5 class="card-title text-light">Dark</h5>
+							<h5 class="card-title text-light">Dark <i class="bi bi-moon"></i></h5>
 							<p class="card-text text-secondary"></p>
 						</div>
 					</div>
