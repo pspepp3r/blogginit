@@ -16,10 +16,10 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class StartSessionsMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private readonly SessionService $sessionService,
-        private readonly SessionInterface $session,
+        private readonly ConfigService $config,
         private readonly RequestService $requestService,
-        private readonly ConfigService $config
+        private readonly SessionInterface $session,
+        private readonly SessionService $sessionService
     ) {}
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -27,6 +27,7 @@ class StartSessionsMiddleware implements MiddlewareInterface
             $this->session->setName($this->config->get('session.name'));
             $this->session->start();
         }
+
         $this->sessionService->storeSession(
             $request->getServerParams()['HTTP_USER_AGENT'],
             $request->getServerParams()['REMOTE_ADDR']

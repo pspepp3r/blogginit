@@ -25,9 +25,6 @@ class SettingsService
          */
         $userId = $this->sessionInterface->get('user');
 
-        /**
-         * @var User
-         */
         $user = $this->userProvider->getById($userId);
 
         if ($data->name) {
@@ -56,8 +53,7 @@ class SettingsService
 
         $this->sessionInterface->set('userEntity', $user);
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->userProvider->sync($user);
     }
 
     public function updateSecurity(?string $password, ?string $is2fa): void
@@ -80,7 +76,6 @@ class SettingsService
 
         $this->sessionInterface->set('userEntity', $user);
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->userProvider->sync($user);
     }
 }

@@ -24,8 +24,7 @@ class UserProvider
         $user->setEmail($data->email);
         $user->setPassword($this->hashService->hashPassword($data->password));
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->sync($user);
 
         return $user;
     }
@@ -34,8 +33,7 @@ class UserProvider
     {
         $user->setVerifiedAt(new \DateTime());
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->sync($user);
     }
 
     public function getById(int $userId): ?User
@@ -52,6 +50,11 @@ class UserProvider
     {
         $user->setPassword($this->hashService->hashPassword($password));
 
+        $this->sync($user);
+    }
+
+    public function sync(User $user): void
+    {
         $this->entityManager->persist($user);
         $this->entityManager->flush();
     }

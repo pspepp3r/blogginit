@@ -16,4 +16,9 @@ class DashboardController
     {
         return $this->twig->render($response, 'app/dashboard.twig', $args);
     }
+
+    public function renderProfile(Response $response)
+    {
+        return $this->twig->render($response, 'app/profile.twig');
+    }
 }

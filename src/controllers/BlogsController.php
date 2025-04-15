@@ -33,4 +33,9 @@ class BlogsController
     {
         return $this->twig->render($response, 'app/create.twig', $args);
     }
+
+    public function renderBlog(Response $response, array $args): Response
+    {
+        return $this->twig->render($response, 'app/read.twig', $args);
+    }
 }

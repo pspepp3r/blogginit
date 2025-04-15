@@ -20,9 +20,21 @@ class BlogProvider
             ->findBy(['user' => (string) $user->getId()]);
     }
 
+    public function getByUUId(string $uuid): ?Blog
+    {
+        return $this->entityManager->getRepository(Blog::class)
+            ->findOneBy(['uuid' => $uuid]);
+    }
+
     public function getAll(): array
     {
         return $this->entityManager->getRepository(Blog::class)
             ->findAll();
+    }
+
+    public function sync(Blog $blog): void
+    {
+        $this->entityManager->persist($blog);
+        $this->entityManager->flush();
     }
 }

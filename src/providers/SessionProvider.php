@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Src\Providers;
 
 use DateTime;
-use Src\Entities\User;
 use Src\Entities\Sessions;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SessionProvider
@@ -27,7 +27,7 @@ class SessionProvider
             ->findOneBy(['user_id' => $user]);
     }
 
-    public function store(Sessions $session, string $sessionId, $userAgent, $IpAddress)
+    public function store(Sessions $session, string $sessionId, $userAgent, $IpAddress): void
     {
         $session
             ->setId($sessionId)
@@ -39,14 +39,19 @@ class SessionProvider
             $session->setUser($user);
         }
 
-        $this->entityManager->persist($session);
-        $this->entityManager->flush();
+        $this->sync($session);
     }
 
-    public function update(Sessions $session, DateTime $dateTime)
+    public function update(Sessions $session, DateTime $dateTime): void
     {
         $session->setLastAction($dateTime);
 
+        $this->sync($session);
+
+    }
+
+    public function sync(Sessions $session): void
+    {
         $this->entityManager->persist($session);
         $this->entityManager->flush();
     }
