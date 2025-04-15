@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Src\Services;
 
+use Src\Entities\Blog;
 use Src\Entities\User;
 use Src\Providers\BlogProvider;
+use Psr\Http\Message\ServerRequestInterface;
 
 class BlogService
 {
@@ -55,5 +57,17 @@ class BlogService
     public function allBlogs(User $user): array
     {
         return $this->blogProvider->getByUser($user);
+    }
+
+    public function addView(ServerRequestInterface $request): ?Blog
+    {
+        $uuid = substr($request->getServerParams()['REQUEST_URI'], 6);
+        $blog = $this->blogProvider->getByUUId($uuid);
+        if ($blog) {
+            $blog->incrementViews();
+            $this->blogProvider->sync($blog);
+        }
+
+        return $blog;
     }
 }

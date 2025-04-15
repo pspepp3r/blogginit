@@ -1,0 +1,24 @@
+{% extends 'extras/layout/layout.twig' %}
+
+{% block title %}
+	Blogginit | {{blog.user.name}}
+{% endblock %}
+
+{% block page_title %}
+	{{blog.title}}
+{% endblock %}
+
+
+{% block page_description %}
+    {{blog.user.name}}
+    <br>
+	{{ blog.created_at|date('d M, Y') }}
+{% endblock %}
+
+{% block content %}
+	<div class="container mt-5">
+        {{blog.content}}
+	</div>
+
+
+{% endblock %}

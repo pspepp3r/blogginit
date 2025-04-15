@@ -7,6 +7,7 @@ namespace Src\Controllers;
 use Slim\Views\Twig;
 use Src\Services\BlogService;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 
 class BlogsController
@@ -14,8 +15,7 @@ class BlogsController
     public function __construct(
         private readonly BlogService $blogService,
         private readonly Twig $twig
-    ) {
-    }
+    ) {}
 
     public function renderBlogs(Response $response, array $args): Response
     {
@@ -34,8 +34,15 @@ class BlogsController
         return $this->twig->render($response, 'app/create.twig', $args);
     }
 
-    public function renderBlog(Response $response, array $args): Response
+    public function renderBlog(Request $request, Response $response, array $args): Response
     {
+        if (!$blog = $this->blogService->addView($request)) {
+            return $response->withHeader('Location', '/error?code=404&message=Blog not found')->withStatus(302);
+        }
+
+        $args = [
+            'blog' => $blog
+        ];
         return $this->twig->render($response, 'app/read.twig', $args);
     }
 }

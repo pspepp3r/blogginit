@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use Slim\App;
 use Src\Controllers\AuthController;
-use Src\Controllers\BlogsController;
 use Src\Middlewares\AuthMiddleware;
+use Src\Controllers\BlogsController;
 use Src\Middlewares\GuestMiddleware;
 use Slim\Routing\RouteCollectorProxy;
 use Src\Controllers\ExtrasController;

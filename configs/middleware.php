@@ -12,7 +12,6 @@ use Slim\Middleware\MethodOverrideMiddleware;
 use Src\Middlewares\ValidationErrorMiddleware;
 use Src\Middlewares\ValidationExceptionMiddleware;
 use Src\Middlewares\HttpSpecializedErrorMiddleware;
-use Src\Middlewares\ViewsIncrement;
 
 return function (App $app) {
 
@@ -28,7 +27,6 @@ return function (App $app) {
     $app->add(ValidationExceptionMiddleware::class);
     $app->add(ValidationErrorMiddleware::class);
     $app->add(HttpSpecializedErrorMiddleware::class);
-    $app->add(ViewsIncrement::class);
     $app->add(StartSessionsMiddleware::class);
 
     $app->addBodyParsingMiddleware();
