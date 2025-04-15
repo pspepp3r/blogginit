@@ -32,6 +32,12 @@ return function (App $app): void {
         $extra->get('/services', [ExtrasController::class, 'renderServiceTerms']);
     })->add(NeutralMiddleware::class);
 
+
+    $app->group('/blog', function (RouteCollectorProxy $blogs) {
+        $blogs->get('/profile', [BlogsController::class, '']);
+        $blogs->get('/{uuid}', [BlogsController::class, 'renderBlog']);
+    })->add(NeutralMiddleware::class);
+
     $app->group('', function (RouteCollectorProxy $guest) {
         $guest->get('/', [LandingController::class, 'index']);
         $guest->group('', function (RouteCollectorProxy $auth) {
@@ -78,10 +84,16 @@ return function (App $app): void {
         $main->group('/blogs', function (RouteCollectorProxy $blogs) {
             $blogs->get('', [BlogsController::class, 'renderBlogs']);
             $blogs->get('/create', [BlogsController::class, 'renderCreateBlog']);
+            $blogs->get('/profile', [BlogsController::class, '']);
+            $blogs->get('/edit/{}', [BlogsController::class, '']);
+            $blogs->get('/view/{}', [BlogsController::class, '']);
+
+            $blogs->post('/create', [BlogsController::class, '']);
         });
 
         $main->group('/reports', function (RouteCollectorProxy $reports) {
             $reports->get('', [ReportsController::class, 'renderReports']);
+            $reports->get('/{}', [ReportsController::class, '']);
         });
 
         $main->group('/settings', function (RouteCollectorProxy $settings) {
