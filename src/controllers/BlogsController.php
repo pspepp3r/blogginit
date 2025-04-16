@@ -36,7 +36,7 @@ class BlogsController
 
     public function renderBlog(Request $request, Response $response, array $args): Response
     {
-        if (!$blog = $this->blogService->addView($request)) {
+        if (!$blog = $this->blogService->addView($args['uuid'])) {
             return $response->withHeader('Location', '/error?code=404&message=Blog not found')->withStatus(302);
         }
 
@@ -46,11 +46,11 @@ class BlogsController
         return $this->twig->render($response, 'app/read.twig', $args);
     }
 
-    public function deleteBlog(Request $request, Response $response): Response
+    public function deleteBlog(Request $request, Response $response, array $args): Response
     {
-        $blog = $this->blogService->getRequestUUId($request);
+        // $blog = $this->blogService->getRequestUUId($request);
 
-        $this->blogService->delete($blog);
+        $this->blogService->delete($args['uuid']);
 
         return $response->withHeader('Location', '/blogs')->withStatus(302);
     }

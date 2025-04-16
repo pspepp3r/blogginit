@@ -59,20 +59,9 @@ class BlogService
         return $this->blogProvider->getByUser($user);
     }
 
-    public function getRequestUUId(ServerRequestInterface $request): ?Blog
+    public function addView(string $uuid): ?Blog
     {
-        $requestUri = $request->getServerParams()['REQUEST_URI'];
-        $uuid = \explode('/', $requestUri);
-
-        if (isset($uuid[3]))
-            return $this->blogProvider->getByUUId($uuid[3]);
-
-        return $this->blogProvider->getByUUId($uuid[2]);
-    }
-
-    public function addView(ServerRequestInterface $request): ?Blog
-    {
-        $blog = $this->getRequestUUId($request);
+        $blog = $this->blogProvider->getByUUId($uuid);
         if ($blog) {
             $blog->incrementViews();
             $this->blogProvider->sync($blog);
@@ -81,8 +70,10 @@ class BlogService
         return $blog;
     }
 
-    public function delete(Blog $blog): void
+    public function delete(string $uuid): void
     {
+        $blog = $this->blogProvider->getByUUId($uuid);
+
         $this->blogProvider->deleteBlog($blog);
     }
 }
