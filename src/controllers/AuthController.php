@@ -49,7 +49,11 @@ class AuthController
         );
 
         $this->authService->register(
-            new RegisterUserData($data['name'], $data['email'], $data['password']),
+            new RegisterUserData(
+                $data['name'],
+                $data['email'],
+                $data['password']
+            ),
             $request
         );
 

@@ -88,7 +88,7 @@ return function (App $app): void {
             $blogs->get('/edit/{uuid}', [BlogsController::class, '']);
 
             $blogs->post('/delete/{uuid}', [BlogsController::class, 'deleteBlog']);
-            $blogs->post('/store', [BlogsController::class, '']);
+            $blogs->post('/store', [BlogsController::class, 'handleCreateBlog']);
         });
 
         $main->group('/reports', function (RouteCollectorProxy $reports) {

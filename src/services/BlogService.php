@@ -8,6 +8,7 @@ use Src\Entities\Blog;
 use Src\Entities\User;
 use Src\Providers\BlogProvider;
 use Psr\Http\Message\ServerRequestInterface;
+use Src\Data_objects\CreateBlogData;
 
 class BlogService
 {
@@ -68,6 +69,14 @@ class BlogService
         }
 
         return $blog;
+    }
+
+    public function create(CreateBlogData $data): bool
+    {
+        return $this->blogProvider->createBlog(
+            $data,
+            str_replace(' ', '-', strtolower($data->title))
+        );
     }
 
     public function delete(string $uuid): void

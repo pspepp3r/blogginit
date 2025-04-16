@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Src\Providers;
 
+use Src\Entities\Blog;
 use Src\Entities\User;
 use Doctrine\ORM\EntityManager;
-use Src\Entities\Blog;
+use Src\Data_objects\CreateBlogData;
 
 class BlogProvider
 {
@@ -30,6 +31,20 @@ class BlogProvider
     {
         return $this->entityManager->getRepository(Blog::class)
             ->findAll();
+    }
+
+    public function createBlog(CreateBlogData $data, string $uuid): bool
+    {
+        $blog = new Blog();
+        $blog->setUser($data->user);
+        $blog->setTitle($data->title);
+        $blog->setContent($data->content);
+        $blog->setCategory($data->category);
+        $blog->setUUId($uuid);
+
+        $this->sync($blog);
+
+        return true;
     }
 
     public function deleteBlog(Blog $blog): void

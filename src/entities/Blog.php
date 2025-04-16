@@ -34,17 +34,20 @@ class Blog
     #[Column]
     private string $content;
 
+    // #[Column]
+    // private string $media;
+
     #[Column]
-    private string $media;
+    private string $category;
 
     #[Column('is_visible', options: ['default' => false])]
-    private bool $isVisible;
+    private bool $isVisible = true;
 
     #[Column]
-    private int $ticks;
+    private int $ticks = 0;
 
     #[Column]
-    private int $views;
+    private int $views = 0;
 
     #[OneToMany(Comment::class, 'blog', ['remove'])]
     private Collection $comments;
@@ -52,8 +55,8 @@ class Blog
     #[ManyToOne(inversedBy: 'blogs')]
     private User $user;
 
-    #[ManyToOne(inversedBy: 'blogs')]
-    private Category $category;
+    // #[ManyToOne(inversedBy: 'blogs')]
+    // private Category $category;
 
     public function __construct() {
         $this->comments = new ArrayCollection();
@@ -99,17 +102,17 @@ class Blog
         return $this;
     }
 
-    public function getMedia(): string
-    {
-        return $this->media;
-    }
+    // public function getMedia(): string
+    // {
+    //     return $this->media;
+    // }
 
-    public function setMedia(string $media): static
-    {
-        $this->media = $media;
+    // public function setMedia(string $media): static
+    // {
+    //     $this->media = $media;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getIsVisible(): bool
     {
@@ -172,15 +175,27 @@ class Blog
         return $this;
     }
 
-    public function getCategory(): Category
+    // public function getCategory(): Category
+    // {
+    //     return $this->category;
+    // }
+
+    // public function setCategory(Category $category): static
+    // {
+    //     $this->category = $category;
+    //     $category->addBlog($this);
+
+    //     return $this;
+    // }
+
+    public function getCategory(): string
     {
         return $this->category;
     }
 
-    public function setCategory(Category $category): static
+    public function setCategory(string $category): static
     {
         $this->category = $category;
-        $category->addBlog($this);
 
         return $this;
     }

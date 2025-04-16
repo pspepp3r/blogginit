@@ -17,6 +17,7 @@
 
     <div class="container mt-5">
         <form action="/blogs/store" method="POST">
+            {{ csrf.fields | raw }}
             <div class="mb-3">
                 <label for="title" class="form-label">Blog Title</label>
                 <input type="text" class="form-control" id="title" name="title" placeholder="Enter blog title" required>
@@ -34,10 +35,10 @@
                     <option value="education">Education</option>
                 </select>
             </div>
-            <div class="mb-3">
+            {# <div class="mb-3">
                 <label for="image" class="form-label">Blog Image</label>
                 <input type="file" class="form-control" id="image" name="image">
-            </div>
+            </div> #}
             <button type="submit" class="btn btn-primary">Create Blog</button>
         </form>
     </div>
