@@ -23,9 +23,14 @@
                     <div class="card-body">
                         <h5 class="card-title text-primary">{{blog.title}}</h5>
                         <p class="card-text text-secondary">T: {{blog.ticks}} V: {{blog.views}}</p>
-                        <a href="#" class="btn btn-primary"><i class="bi bi-eye-fill"></i></a>
+                        <a href="blog/{{blog.uuid}}" class="btn btn-primary"><i class="bi bi-eye-fill"></i></a>
                         <a href="#" class="btn btn-primary"><i class="bi bi-pen-fill"></i></a>
-                        <a href="#" class="btn btn-primary"><i class="bi bi-trash-fill"></i></a>
+                        <form action="/blogs/delete/{{blog.uuid}}" class="d-inline" method="post">
+							{{ csrf.fields | raw }}
+                            <button class="btn btn-primary">
+                                <i class="bi bi-trash-fill"></i>
+                            </button>
+                        </form>
                     </div>
 				</div>
 			</div>
@@ -34,7 +39,7 @@
 				<div class="card border-primary">
                     <div class="card-body">
                         <h5 class="card-title text-primary">Create a new blog</h5>
-                        <a href="#" class="btn btn-primary"><i class="bi bi-plus-circle-fill"></i></a>
+                        <a href="/blogs/create" class="btn btn-primary"><i class="bi bi-plus-circle-fill"></i></a>
                     </div>
 				</div>
 			</div>
@@ -43,7 +48,7 @@
 				<div class="col-12 text-center">
 					<h1 class="lead alert alert-warning" role="alert">No Blogs Found</h1>
 				</div>
-                <a href="blogs/create" class="btn btn-primary bg-gradient px-2 col-4 ms-5">Create your first blog</a>
+                <a href="/blogs/create" class="btn btn-primary bg-gradient px-2 col-4 ms-5">Create your first blog</a>
 			</div>
         {% endif %}
 

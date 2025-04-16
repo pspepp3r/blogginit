@@ -45,4 +45,13 @@ class BlogsController
         ];
         return $this->twig->render($response, 'app/read.twig', $args);
     }
+
+    public function deleteBlog(Request $request, Response $response): Response
+    {
+        $blog = $this->blogService->getRequestUUId($request);
+
+        $this->blogService->delete($blog);
+
+        return $response->withHeader('Location', '/blogs')->withStatus(302);
+    }
 }

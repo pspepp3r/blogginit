@@ -85,10 +85,10 @@ return function (App $app): void {
             $blogs->get('', [BlogsController::class, 'renderBlogs']);
             $blogs->get('/create', [BlogsController::class, 'renderCreateBlog']);
             $blogs->get('/profile', [BlogsController::class, '']);
-            $blogs->get('/edit/{}', [BlogsController::class, '']);
-            $blogs->get('/view/{}', [BlogsController::class, '']);
+            $blogs->get('/edit/{uuid}', [BlogsController::class, '']);
 
-            $blogs->post('/create', [BlogsController::class, '']);
+            $blogs->post('/delete/{uuid}', [BlogsController::class, 'deleteBlog']);
+            $blogs->post('/store', [BlogsController::class, '']);
         });
 
         $main->group('/reports', function (RouteCollectorProxy $reports) {

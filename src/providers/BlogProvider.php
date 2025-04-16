@@ -32,6 +32,13 @@ class BlogProvider
             ->findAll();
     }
 
+    public function deleteBlog(Blog $blog): void
+    {
+        $this->entityManager->remove($blog);
+
+        $this->entityManager->flush();
+    }
+
     public function sync(Blog $blog): void
     {
         $this->entityManager->persist($blog);
