@@ -10,6 +10,7 @@
 
 
 {% block page_description %}
+    <img src="{{ asset('build/images/blogginit.png') }}" style="width: 5%; height: 5%" alt="">
     {{blog.user.name}}
     <br>
 	{{ blog.created_at|date('d M, Y') }}

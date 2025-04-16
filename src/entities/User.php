@@ -39,7 +39,7 @@ class User
     private string $picture;
 
     #[Column(nullable: true)]
-    private string $gender;
+    private string $gender = 'male';
 
     #[Column(nullable: true)]
     private string $occupation = '';
@@ -51,7 +51,7 @@ class User
     private string $introduction = '';
 
     #[Column('color_scheme', enumType: ColorScheme::class, options: ['default' => 'light'])]
-    private ColorScheme $colorScheme;
+    private ColorScheme $colorScheme = ColorScheme::Light;
 
     #[Column('two_factor',  options: ['default' => false])]
     private bool $twoFactor = false;
@@ -75,9 +75,6 @@ class User
     {
         $this->blogs = new ArrayCollection();
         $this->sessions = new ArrayCollection();
-
-        $this->colorScheme = ColorScheme::Light;
-        $this->gender = 'male';
     }
 
     #[PrePersist, PreUpdate]

@@ -23,6 +23,7 @@ class UserProvider
         $user->setName($data->name);
         $user->setEmail($data->email);
         $user->setPassword($this->hashService->hashPassword($data->password));
+        $user->setPicture('default.png');
 
         $this->sync($user);
 
