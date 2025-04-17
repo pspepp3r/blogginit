@@ -94,7 +94,7 @@ class BlogService
     {
         $blog = $this->blogProvider->getByUUId($uuid);
 
-        if ($interaction = $this->interactionsProvider->getByBlog($blog)) {
+        if ($interaction = $this->interactionsProvider->getByUser($user)) {
             $this->interactionsProvider->deleteInteraction($interaction);
             
             $this->blogProvider->removeTick($blog);

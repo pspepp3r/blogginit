@@ -16,9 +16,9 @@ class InteractionsProvider
         private readonly EntityManager $entityManager
     ) {}
 
-    public function getByBlog(Blog $blog): ?Interactions
+    public function getByUser(User $user): ?Interactions
     {
-        return $this->entityManager->getRepository(Interactions::class)->findOneBy(['blog' => $blog->getId()]);
+        return $this->entityManager->getRepository(Interactions::class)->findOneBy(['user' => $user]);
     }
 
     public function createTickInteraction(Blog $blog, User $user): Interactions
