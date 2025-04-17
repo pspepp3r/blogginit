@@ -47,6 +47,20 @@ class BlogProvider
         return true;
     }
 
+    public function addTick(Blog $blog): void
+    {
+        $blog->incrementTicks();
+
+        $this->sync($blog);
+    }
+
+    public function removeTick(Blog $blog): void
+    {
+        $blog->decrementTicks();
+
+        $this->sync($blog);
+    }
+
     public function deleteBlog(Blog $blog): void
     {
         $this->entityManager->remove($blog);

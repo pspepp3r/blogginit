@@ -9,11 +9,15 @@ use Src\Entities\User;
 use Src\Providers\BlogProvider;
 use Psr\Http\Message\ServerRequestInterface;
 use Src\Data_objects\CreateBlogData;
+use Src\Providers\InteractionsProvider;
+
+use function Symfony\Component\String\b;
 
 class BlogService
 {
     public function __construct(
-        private readonly BlogProvider $blogProvider
+        private readonly BlogProvider $blogProvider,
+        private readonly InteractionsProvider $interactionsProvider
     ) {}
 
     public function totalBlogs(User $user): int
@@ -86,12 +90,20 @@ class BlogService
         $this->blogProvider->deleteBlog($blog);
     }
 
-    public function toggleTick(string $uuid)
+    public function toggleTick(string $uuid, User $user)
     {
         $blog = $this->blogProvider->getByUUId($uuid);
 
-        $blog->setTicked(!$blog->wasTicked());
+        if ($interaction = $this->interactionsProvider->getByBlog($blog)) {
+            $this->interactionsProvider->deleteInteraction($interaction);
+            
+            $this->blogProvider->removeTick($blog);
 
-        $this->blogProvider->sync($blog);
+            return;
+        }
+
+        $interaction = $this->interactionsProvider->createTickInteraction($blog, $user);
+
+        $this->blogProvider->addTick($blog);
     }
 }

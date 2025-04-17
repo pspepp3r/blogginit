@@ -52,6 +52,9 @@ class Blog
     #[OneToMany(Comment::class, 'blog', ['remove'])]
     private Collection $comments;
 
+    #[OneToMany(Interactions::class, 'blog', ['persist', 'remove'])]
+    private Collection $interactions;
+
     #[ManyToOne(inversedBy: 'blogs')]
     private User $user;
 
@@ -60,6 +63,7 @@ class Blog
 
     public function __construct() {
         $this->comments = new ArrayCollection();
+        $this->interactions = new ArrayCollection();
     }
 
     public function getId(): int
@@ -138,6 +142,13 @@ class Blog
         return $this;
     }
 
+    public function decrementTicks(): static
+    {
+        $this->ticks--;
+
+        return $this;
+    }
+
     public function getViews(): int
     {
         return $this->views;
@@ -158,6 +169,18 @@ class Blog
     public function addComment(Comment $comment): static
     {
         $this->comments->add($comment);
+
+        return $this;
+    }
+    
+    public function getInteractions(): ArrayCollection|Collection
+    {
+        return $this->interactions;
+    }
+
+    public function addInteraction(Interactions $interaction): static
+    {
+        $this->interactions->add($interaction);
 
         return $this;
     }

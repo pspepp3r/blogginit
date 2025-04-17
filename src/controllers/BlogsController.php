@@ -11,8 +11,9 @@ use Src\Services\ResponseFormatterService;
 use Src\Validators\CreateBlogRequestValidator;
 use Psr\Http\Message\ResponseInterface as Response;
 use Src\Contracts\RequestValidatorFactoryInterface;
-use Src\Validators\UserRegistrationRequestValidator;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Src\Entities\User;
+use Src\Providers\UserProvider;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class BlogsController
@@ -22,7 +23,8 @@ class BlogsController
         private readonly ResponseFormatterService $responseFormatter,
         private readonly RequestValidatorFactoryInterface $requestValidatorFactory,
         private readonly SessionInterface $session,
-        private readonly Twig $twig
+        private readonly Twig $twig,
+        private readonly UserProvider $userProvider
     ) {}
 
     public function renderBlogs(Response $response, array $args): Response
@@ -44,12 +46,18 @@ class BlogsController
 
     public function renderBlog(Response $response, array $args): Response
     {
+        /**
+         * @var User
+         */
+        $user = $this->twig->getEnvironment()->getGlobals()['user'];
+
         if (!$blog = $this->blogService->addView($args['uuid'])) {
             return $response->withHeader('Location', '/error?code=404&message=Blog not found')->withStatus(302);
         }
 
         $args = [
-            'blog' => $blog
+            'blog' => $blog,
+            'ticked' => $this->userProvider->ticked($user, $blog)
         ];
         return $this->twig->render($response, 'app/read.twig', $args);
     }
@@ -83,10 +91,10 @@ class BlogsController
 
     public function toggleTick(Response $response, array $args): Response
     {
-        if (!$user = $this->session->get('userEntity'))
-        return $this->responseFormatter->asJson($response, ['interaction_error' => true]);
+        if (!$user = $this->twig->getEnvironment()->getGlobals()['user'])
+            return $this->responseFormatter->asJson($response, ['interaction_error' => true]);
 
-    // $this->blogService->toggleTick($args['uuid']);
+        $this->blogService->toggleTick($args['uuid'], $user);
         return $this->responseFormatter->asJson($response, ['ok' => true]);
     }
 

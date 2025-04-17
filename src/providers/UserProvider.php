@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Src\Providers;
 
+use Src\Entities\Blog;
 use Src\Entities\User;
 use Src\Services\HashService;
 use Doctrine\ORM\EntityManager;
 use Src\Data_objects\RegisterUserData;
+use Src\Entities\Interactions;
 
 class UserProvider
 {
@@ -52,6 +54,13 @@ class UserProvider
         $user->setPassword($this->hashService->hashPassword($password));
 
         $this->sync($user);
+    }
+
+    public function ticked(User $user, Blog $blog): bool
+    {
+        return $this->entityManager
+            ->getRepository(Interactions::class)
+            ->findOneBy(['user' => $user, 'blog' => $blog]) ? true : false;
     }
 
     public function sync(User $user): void

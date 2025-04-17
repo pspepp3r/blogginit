@@ -71,10 +71,14 @@ class User
     #[OneToMany(Sessions::class, 'user', ['persist', 'remove'])]
     private Collection $sessions;
 
+    #[OneToMany(Interactions::class, 'user', ['persist', 'remove'])]
+    private Collection $interactions;
+
     public function __construct()
     {
         $this->blogs = new ArrayCollection();
         $this->sessions = new ArrayCollection();
+        $this->interactions = new ArrayCollection();
     }
 
     #[PrePersist, PreUpdate]
@@ -232,6 +236,18 @@ class User
     public function setColorScheme($colorScheme): static
     {
         $this->colorScheme = $colorScheme;
+
+        return $this;
+    }
+
+    public function getInteractions(): ArrayCollection|Collection
+    {
+        return $this->interactions;
+    }
+
+    public function addInteraction(Interactions $interaction): static
+    {
+        $this->interactions->add($interaction);
 
         return $this;
     }
