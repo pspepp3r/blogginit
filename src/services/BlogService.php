@@ -64,13 +64,16 @@ class BlogService
         return $this->blogProvider->getByUser($user);
     }
 
-    public function addView(string $uuid): ?Blog
+    public function addView(string $uuid, User $user): ?Blog
     {
         $blog = $this->blogProvider->getByUUId($uuid);
-        if ($blog) {
-            $blog->incrementViews();
-            $this->blogProvider->sync($blog);
+
+        if ($this->interactionsProvider->getViewByUser($user)) {
+            return $blog;
         }
+        
+        $this->interactionsProvider->createViewInteraction($blog, $user);
+        $this->blogProvider->addView($blog);
 
         return $blog;
     }
@@ -94,9 +97,9 @@ class BlogService
     {
         $blog = $this->blogProvider->getByUUId($uuid);
 
-        if ($interaction = $this->interactionsProvider->getByUser($user)) {
+        if ($interaction = $this->interactionsProvider->getTickByUser($user)) {
             $this->interactionsProvider->deleteInteraction($interaction);
-            
+
             $this->blogProvider->removeTick($blog);
 
             return;

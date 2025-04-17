@@ -54,6 +54,13 @@ class BlogProvider
         $this->sync($blog);
     }
 
+    public function addView(Blog $blog): void
+    {
+        $blog->incrementViews();
+
+        $this->sync($blog);
+    }
+
     public function removeTick(Blog $blog): void
     {
         $blog->decrementTicks();

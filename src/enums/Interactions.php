@@ -6,6 +6,6 @@ namespace Src\Enums;
 
 enum Interactions: string {
     case Tick = 'tick';
-    case Comment = 'comment';
-    // case View = 'view';
+    // case Comment = 'comment';
+    case View = 'view';
 }

@@ -32,7 +32,6 @@ return function (App $app): void {
         $extra->get('/services', [ExtrasController::class, 'renderServiceTerms']);
     })->add(NeutralMiddleware::class);
 
-
     $app->group('/blog', function (RouteCollectorProxy $blogs) {
         $blogs->get('/profile', [BlogsController::class, '']);
         $blogs->get('/{uuid}', [BlogsController::class, 'renderBlog']);

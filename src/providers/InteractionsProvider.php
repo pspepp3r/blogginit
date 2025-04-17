@@ -16,9 +16,14 @@ class InteractionsProvider
         private readonly EntityManager $entityManager
     ) {}
 
-    public function getByUser(User $user): ?Interactions
+    public function getTickByUser(User $user): ?Interactions
     {
-        return $this->entityManager->getRepository(Interactions::class)->findOneBy(['user' => $user]);
+        return $this->entityManager->getRepository(Interactions::class)->findOneBy(['user' => $user, 'interaction' => 'tick']);
+    }
+
+    public function getViewByUser(User $user): ?Interactions
+    {
+        return $this->entityManager->getRepository(Interactions::class)->findOneBy(['user' => $user, 'interaction' => 'view']);
     }
 
     public function createTickInteraction(Blog $blog, User $user): Interactions
@@ -29,6 +34,20 @@ class InteractionsProvider
             ->setUser($user)
             
             ->setInteraction(EnumsInteractions::Tick);
+
+        $this->sync($interaction);
+
+        return $interaction;
+    }
+
+    public function createViewInteraction(Blog $blog, User $user): Interactions
+    {
+        $interaction = new Interactions();
+
+        $interaction->setBlog($blog)
+            ->setUser($user)
+            
+            ->setInteraction(EnumsInteractions::View);
 
         $this->sync($interaction);
 

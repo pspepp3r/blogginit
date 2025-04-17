@@ -4,6 +4,7 @@ import { bootstrapAlert } from './components';
 window.addEventListener('DOMContentLoaded', function () {
     const toggleTickBtn = this.document.querySelector('.toggle-tick-btn');
     const toggleTickIcon = this.document.querySelector('.toggle-tick-icon');
+    const copyBtn = this.document.querySelector('.copy-btn');
 
     toggleTickBtn.addEventListener('click', () => {
         const blogUUId = toggleTickBtn.getAttribute('data-blog-uuid');
@@ -16,6 +17,10 @@ window.addEventListener('DOMContentLoaded', function () {
                 toggleTickIcon.classList.toggle('bi-check-circle-fill');
             }
         });
+    });
+
+    copyBtn.addEventListener('click', () => {
+        this.navigator.clipboard.writeText(this.document.documentURI);
     });
 
 });
