@@ -4,15 +4,23 @@
 	Blogginit | {{blog.user.name}}
 {% endblock %}
 
+{% block javascript %}
+    {{ parent() }}
+	{{ encore_entry_script_tags('read') }}
+{% endblock %}
+
 {% block page_title %}
 	{{blog.title}}
 {% endblock %}
 
 
 {% block page_description %}
-    <img src="{{ asset('build/images/blogginit.png') }}" style="width: 5%; height: 5%" alt="">
+    <img src="{{ asset('build/images/blogginit.png') }}" alt="" class="img-icon">
     {{blog.user.name}}
     <br>
+    <div class="d-inline">
+		<span class="badge bg-primary">{{blog.category}}</span>
+    </div>
 	{{ blog.created_at|date('d M, Y') }}
 {% endblock %}
 
@@ -21,5 +29,52 @@
         {{blog.content}}
 	</div>
 
+    <div class="my-4">
+        <div class="row">
+            <div class="col-4 text-center bg-warning-subtle p-2 border-end border-light">
+                <button class="btn p-0 toggle-tick-btn" data-blog-uuid="{{blog.uuid}}">
+                    <i class="bi {{blog.wasTicked() ? 'bi-check-circle-fill' : 'bi-check-circle'}} text-primary toggle-tick-icon"></i>
+                </button>
+            </div>
+            <div class="col-4 text-center bg-warning-subtle p-2 border-end border-light">
+                <a href="#comment">
+                    <i class="bi bi-chat-right-dots text-primary"></i>
+                </a>
+            </div>
+            <div class="col-4 text-center bg-warning-subtle p-2">
+                <a href="#">
+                    <i class="bi bi-share-fill text-primary"></i>
+                </a>
+            </div>
+		</div>
+        {% for comment in blog.comments %}
+            <div class="card border-primary">
+                <div class=" card-header">{{comment.email}}</div>
+                <div class="card-body">
+                    <p class="lead">{{comment.text}}</p>
+                </div>
+            </div>
+        {% endfor %}
+        {% if user %}
+            <div class="mt-4 card border-primary">
+                <div class="card-header">
+                    <p class="lead card-title">Leave a comment</p>
+                </div>
+                <div class="card-body" id="comment">
+                    <form action="#" method="post">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="text" class="form-label">Comment</label>
+                            <textarea class="form-control" name="text" id="text" required></textarea>
+                        </div>
+                        <button class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+        {% endif %}
+            </div>
+    </div>
 
 {% endblock %}

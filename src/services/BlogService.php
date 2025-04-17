@@ -85,4 +85,13 @@ class BlogService
 
         $this->blogProvider->deleteBlog($blog);
     }
+
+    public function toggleTick(string $uuid)
+    {
+        $blog = $this->blogProvider->getByUUId($uuid);
+
+        $blog->setTicked(!$blog->wasTicked());
+
+        $this->blogProvider->sync($blog);
+    }
 }

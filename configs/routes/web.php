@@ -36,6 +36,8 @@ return function (App $app): void {
     $app->group('/blog', function (RouteCollectorProxy $blogs) {
         $blogs->get('/profile', [BlogsController::class, '']);
         $blogs->get('/{uuid}', [BlogsController::class, 'renderBlog']);
+
+        $blogs->post('/{uuid}/tick', [BlogsController::class, 'toggleTick']);
     })->add(NeutralMiddleware::class);
 
     $app->group('', function (RouteCollectorProxy $guest) {

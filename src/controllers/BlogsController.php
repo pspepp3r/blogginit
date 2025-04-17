@@ -7,17 +7,21 @@ namespace Src\Controllers;
 use Slim\Views\Twig;
 use Src\Services\BlogService;
 use Src\Data_objects\CreateBlogData;
+use Src\Services\ResponseFormatterService;
 use Src\Validators\CreateBlogRequestValidator;
 use Psr\Http\Message\ResponseInterface as Response;
 use Src\Contracts\RequestValidatorFactoryInterface;
 use Src\Validators\UserRegistrationRequestValidator;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class BlogsController
 {
     public function __construct(
         private readonly BlogService $blogService,
+        private readonly ResponseFormatterService $responseFormatter,
         private readonly RequestValidatorFactoryInterface $requestValidatorFactory,
+        private readonly SessionInterface $session,
         private readonly Twig $twig
     ) {}
 
@@ -76,4 +80,15 @@ class BlogsController
 
         return $response->withHeader('Location', 'error?code=&message=Something went wrong')->withStatus(302);
     }
+
+    public function toggleTick(Response $response, array $args): Response
+    {
+        if (!$user = $this->session->get('userEntity'))
+        return $this->responseFormatter->asJson($response, ['interaction_error' => true]);
+
+    // $this->blogService->toggleTick($args['uuid']);
+        return $this->responseFormatter->asJson($response, ['ok' => true]);
+    }
+
+    public function addComment() {}
 }

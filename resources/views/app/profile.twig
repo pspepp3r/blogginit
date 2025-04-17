@@ -15,22 +15,26 @@
 
 {% block content %}
 	<div class="container mt-5">
-    {# <h1 class="lead text-danger">This page is still in development, please come back later to view your profile.</h1> #}
         <div class="">
 			<div class="card border-primary mb-4">
-				<div class="card-body">
-					<h5 class="card-title text-primary">About me</h5>
-					<hr>
+                <div class="row">
+                    <div class="col-4">
+                        <img src="{{ asset('build/images/blogginit.png') }}" alt="" class="h-100 w-100">
+                    </div>
+                    <div class="card-body col-8">
+                        <h5 class="card-title text-primary">About me</h5>
+                        <hr>
 
-					<p class="card-text text-secondary">Name:
-						{{ user.name}}</p>
-					<p class="card-text text-secondary">Occupation:
-						{{user.occupation}}</p>
-					<p class="card-text text-secondary">Location:
-						{{user.location}}</p>
-					<p class="card-text text-secondary">Introduction:
-						{{user.introduction}}</p>
-				</div>
+                        <p class="card-text text-secondary">Name:
+                            {{ user.name}}</p>
+                        <p class="card-text text-secondary">Occupation:
+                            {{user.occupation}}</p>
+                        <p class="card-text text-secondary">Location:
+                            {{user.location}}</p>
+                        <p class="card-text text-secondary">Introduction:
+                            {{user.introduction}}</p>
+                    </div>
+                </div>
 			</div>
 			<div class="card border-primary">
 				<div class="card-body">

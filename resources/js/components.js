@@ -32,15 +32,16 @@ const bootstrapAlert = (message, type = 'success') => {
     const alertText = document.querySelector('.alert-text');
     let alertBox = document.querySelector('.alert');
 
-    if (type == 'fail') {
-        alertBox.classList.remove('alert-primary')
-        alertBox.classList.add('alert-danger')
-    }
+    if (type == 'fail')
+        alertBox.classList.replace('alert-primary', 'alert-danger');
+
+    if (type == 'info')
+        alertBox.classList.replace('alert-primary', 'alert-warning');
 
     alertText.textContent = message;
 
     alertBox.style.display = 'block';
-    
+
     setTimeout(() => {
         alertBox.style.display = 'none';
     }, 2000);
