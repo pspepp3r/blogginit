@@ -64,18 +64,24 @@ class BlogService
         return $this->blogProvider->getByUser($user);
     }
 
-    public function addView(string $uuid, User $user): ?Blog
+    public function addView(string $uuid, User|string $user): ?Blog
     {
         $blog = $this->blogProvider->getByUUId($uuid);
 
-        if ($this->interactionsProvider->getViewByUser($user)) {
+        if($user instanceof User){
+            if ($this->interactionsProvider->getViewByUser($user)) {
+                return $blog;
+            }
+            
+            $this->interactionsProvider->createViewInteraction($blog, $user);
+            $this->blogProvider->addView($blog);
+
+            return $blog;
+        } else {
+            $this->interactionsProvider->createGuestView($blog, $user);
+
             return $blog;
         }
-        
-        $this->interactionsProvider->createViewInteraction($blog, $user);
-        $this->blogProvider->addView($blog);
-
-        return $blog;
     }
 
     public function create(CreateBlogData $data): bool

@@ -32,7 +32,7 @@ class InteractionsProvider
 
         $interaction->setBlog($blog)
             ->setUser($user)
-            
+
             ->setInteraction(EnumsInteractions::Tick);
 
         $this->sync($interaction);
@@ -46,7 +46,21 @@ class InteractionsProvider
 
         $interaction->setBlog($blog)
             ->setUser($user)
-            
+
+            ->setInteraction(EnumsInteractions::View);
+
+        $this->sync($interaction);
+
+        return $interaction;
+    }
+
+    public function createGuestView(Blog $blog, User|string $user): Interactions
+    {
+        $interaction = new Interactions();
+
+        $interaction->setBlog($blog)
+            ->setIpAddress($user)
+
             ->setInteraction(EnumsInteractions::View);
 
         $this->sync($interaction);

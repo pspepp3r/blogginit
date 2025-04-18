@@ -44,12 +44,16 @@ class BlogsController
         return $this->twig->render($response, 'app/create.twig', $args);
     }
 
-    public function renderBlog(Response $response, array $args): Response
+    public function renderBlog(Request $request, Response $response, array $args): Response
     {
         /**
          * @var User
          */
         $user = $this->twig->getEnvironment()->getGlobals()['user'];
+
+        if(!$user)
+            $user = $request->getServerParams()['REMOTE_ADDR'];
+        
 
         if (!$blog = $this->blogService->addView($args['uuid'], $user)) {
             return $response->withHeader('Location', '/error?code=404&message=Blog not found')->withStatus(302);
@@ -78,7 +82,7 @@ class BlogsController
         if ($this->blogService->create(
             new CreateBlogData(
                 $this->twig->getEnvironment()->getGlobals()['user'],
-                $data['title'],
+                trim($data['title']),
                 $data['content'],
                 $data['category']
             )

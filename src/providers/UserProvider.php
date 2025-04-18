@@ -56,11 +56,15 @@ class UserProvider
         $this->sync($user);
     }
 
-    public function ticked(User $user, Blog $blog): bool
+    public function ticked(User|string $user, Blog $blog): bool
     {
-        return $this->entityManager
-            ->getRepository(Interactions::class)
-            ->findOneBy(['user' => $user, 'blog' => $blog]) ? true : false;
+        if ($user instanceof User) {
+            return $this->entityManager
+                ->getRepository(Interactions::class)
+                ->findOneBy(['user' => $user, 'blog' => $blog]) ? true : false;
+        } else {
+            return false;
+        }
     }
 
     public function sync(User $user): void
