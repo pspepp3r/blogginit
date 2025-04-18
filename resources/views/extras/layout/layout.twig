@@ -65,14 +65,52 @@
 					</div>
 				</div>
                 {% endif %}
+				
+                <div class="nav-dropdown">
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" id="navDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-arrow-left-right"></i>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navDropdown">
+                            {% if user %}
+                                <li>
+									<a class="dropdown-item" href="/dashboard">Dashboard</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="/reports">Statistics</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="/settings">Settings</a>
+								</li>
+                                {% else %}
+                                    <li>
+                                        <a class="dropdown-item" href="/login">Login</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="/register">Register</a>
+                                    </li>
+                            {% endif %}
+                            <hr>
+                            <li>
+                                <a class="dropdown-item" href="/extra/about">About</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/extra/services">Terms of Service</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/extra/privacy">Privacy Policy</a>
+                            </li>
+						</ul>
+					</div>
+				</div>
 
 			</div>
 		</nav>
 
-		<div class="container pt-5">
+		<div class="container pt-5 mb-4">
 			<div class="row mt-2">
 				<div class="col-sm-12 col-md-3 mt-2">
-					<div class="card border-secondary-subtle position-fixed">
+					<div class="card border-secondary-subtle position-fixed d-none d-md-block">
 						<div class="card-body">
 							<h5 class="card-title text-primary">Quick Access</h5>
 							<ul class="list-group">
@@ -128,7 +166,7 @@
 			</div>
 		</div>
                 {% if user == null %}
-                    <footer class="bg-primary text-white p-2 text-center mt-4">
+                    <footer class="bg-primary text-white p-2 text-center fixed-bottom mt-4">
                         <div class="container">
                             <p>&copy; {{ 'now' | date('Y') }} Blogginit. All rights reserved.</p>
                         </div>
