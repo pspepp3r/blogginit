@@ -9,6 +9,7 @@ use Src\Entities\User;
 use Src\Providers\BlogProvider;
 use Psr\Http\Message\ServerRequestInterface;
 use Src\Data_objects\CreateBlogData;
+use Src\Providers\CommentProvider;
 use Src\Providers\InteractionsProvider;
 
 use function Symfony\Component\String\b;
@@ -17,6 +18,7 @@ class BlogService
 {
     public function __construct(
         private readonly BlogProvider $blogProvider,
+        private readonly CommentProvider $commentProvider,
         private readonly InteractionsProvider $interactionsProvider
     ) {}
 
@@ -51,6 +53,13 @@ class BlogService
         return $totalViews;
     }
 
+    public function totalComments(string $uuid): int
+    {
+        $blog = $this->getBlog($uuid);
+
+        return count($this->commentProvider->getByBlog($blog));
+    }
+
     public function averageViews(User $user): float|int
     {
         if ($this->totalBlogs($user))
@@ -66,23 +75,23 @@ class BlogService
 
     public function addView(string $uuid, User|string $user): ?Blog
     {
-        $blog = $this->blogProvider->getByUUId($uuid);
+        $blog = $this->getBlog($uuid);
 
-        if(!$blog){
+        if (!$blog) {
             return null;
         }
 
-        if($user instanceof User){
+        if ($user instanceof User) {
             if ($this->interactionsProvider->getViewByUser($user)) {
                 return $blog;
             }
-            
+
             $this->interactionsProvider->createViewInteraction($blog, $user);
             $this->blogProvider->addView($blog);
-            
+
             return $blog;
         } else {
-            if($this->interactionsProvider->getViewByIp($user)){
+            if ($this->interactionsProvider->getViewByIp($user)) {
                 return $blog;
             }
             $this->interactionsProvider->createGuestView($blog, $user);
@@ -102,14 +111,14 @@ class BlogService
 
     public function delete(string $uuid): void
     {
-        $blog = $this->blogProvider->getByUUId($uuid);
+        $blog = $this->getBlog($uuid);
 
         $this->blogProvider->deleteBlog($blog);
     }
 
     public function toggleTick(string $uuid, User $user)
     {
-        $blog = $this->blogProvider->getByUUId($uuid);
+        $blog = $this->getBlog($uuid);
 
         if ($interaction = $this->interactionsProvider->getTickByUser($user)) {
             $this->interactionsProvider->deleteInteraction($interaction);
@@ -122,5 +131,10 @@ class BlogService
         $interaction = $this->interactionsProvider->createTickInteraction($blog, $user);
 
         $this->blogProvider->addTick($blog);
+    }
+
+    public function getBlog(string $uuid): ?Blog
+    {
+        return $this->blogProvider->getByUUId($uuid);
     }
 }

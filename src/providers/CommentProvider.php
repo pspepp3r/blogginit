@@ -21,6 +21,12 @@ class CommentProvider
             ->findBy(['user' => (string) $user->getId()]);
     }
 
+    public function getByBlog(Blog $blog): array
+    {
+        return $this->entityManager->getRepository(Comment::class)
+            ->findBy(['blog' => $blog]);
+    }
+
     public function getAll(): array
     {
         return $this->entityManager->getRepository(Comment::class)

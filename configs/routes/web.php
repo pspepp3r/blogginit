@@ -95,7 +95,7 @@ return function (App $app): void {
 
         $main->group('/reports', function (RouteCollectorProxy $reports) {
             $reports->get('', [ReportsController::class, 'renderReports']);
-            $reports->get('/{}', [ReportsController::class, '']);
+            $reports->get('/{uuid}', [ReportsController::class, 'renderReport']);
         });
 
         $main->group('/settings', function (RouteCollectorProxy $settings) {

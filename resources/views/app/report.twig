@@ -1,0 +1,40 @@
+{% extends 'app/layout/layout.twig' %}
+
+{% block title %}
+	Blogginit | Reports
+{% endblock %}
+
+{% block page_title %}
+	{{blog.title}}
+{% endblock %}
+
+
+{% block page_description %}
+	Reports
+{% endblock %}
+
+{% block content %}
+	<div class="container mt-5">
+		<div class="">
+			<div class="card border-primary">
+				<div class="card-body">
+					<h5 class="card-title text-primary">General Reports</h5>
+					<hr>
+
+					<p class="card-text text-secondary">Blog Title:
+						{{ blog.title}}</p>
+					<p class="card-text text-secondary">Blog Ticks Count:
+						{{blog.ticks}}</p>
+					<p class="card-text text-secondary">Blog Views Count:
+						{{blog.views}}</p>
+					<p class="card-text text-secondary">Blog Comment Count:
+						{{comment}}</p>
+				</div>
+			</div>
+		</div>
+        {# TODO: ADD INTERACTION REPORT CHART #}
+	</div>
+
+
+{% endblock %}
+
