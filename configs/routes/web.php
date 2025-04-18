@@ -37,6 +37,7 @@ return function (App $app): void {
         $blogs->get('/{uuid}', [BlogsController::class, 'renderBlog']);
 
         $blogs->post('/{uuid}/tick', [BlogsController::class, 'toggleTick']);
+        $blogs->post('/{uuid}/comment', [BlogsController::class, 'addComment']);
     })->add(NeutralMiddleware::class);
 
     $app->group('', function (RouteCollectorProxy $guest) {

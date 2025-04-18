@@ -12,24 +12,26 @@ use Src\Validators\CreateBlogRequestValidator;
 use Psr\Http\Message\ResponseInterface as Response;
 use Src\Contracts\RequestValidatorFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Src\Entities\Blog;
+use Src\Entities\Reply;
 use Src\Entities\User;
 use Src\Providers\UserProvider;
+use Src\Services\CommentService;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class BlogsController
 {
     public function __construct(
         private readonly BlogService $blogService,
+        private readonly CommentService $commentService,
         private readonly ResponseFormatterService $responseFormatter,
         private readonly RequestValidatorFactoryInterface $requestValidatorFactory,
-        private readonly SessionInterface $session,
         private readonly Twig $twig,
         private readonly UserProvider $userProvider
     ) {}
 
     public function renderBlogs(Response $response, array $args): Response
     {
-
         $user = $this->twig->getEnvironment()->getGlobals()['user'];
 
         $args = [
@@ -53,7 +55,7 @@ class BlogsController
 
         if(!$user)
             $user = $request->getServerParams()['REMOTE_ADDR'];
-        
+
 
         if (!$blog = $this->blogService->addView($args['uuid'], $user)) {
             return $response->withHeader('Location', '/error?code=404&message=Blog not found')->withStatus(302);
@@ -102,5 +104,12 @@ class BlogsController
         return $this->responseFormatter->asJson($response, ['ok' => true]);
     }
 
-    public function addComment() {}
+    public function addComment(Request $request, Response $response, array $args): Response
+    {
+        $data = $request->getParsedBody();
+        $user = $this->twig->getEnvironment()->getGlobals()['user'];
+
+        $this->commentService->addComment($user, $args['uuid'], $data['comment']);
+        return $response->withHeader('Location', '/blog/' . $args['uuid'])->withStatus(302);
+    }
 }

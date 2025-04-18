@@ -74,11 +74,15 @@ class User
     #[OneToMany(Interactions::class, 'user', ['persist', 'remove'])]
     private Collection $interactions;
 
+    #[OneToMany(Comment::class, 'user', ['persist', 'remove'])]
+    private Collection $comments;
+
     public function __construct()
     {
         $this->blogs = new ArrayCollection();
         $this->sessions = new ArrayCollection();
         $this->interactions = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     #[PrePersist, PreUpdate]
@@ -248,6 +252,17 @@ class User
     public function addInteraction(Interactions $interaction): static
     {
         $this->interactions->add($interaction);
+
+        return $this;
+    }
+    
+    public function getComments(): ArrayCollection|Collection
+    {
+        return $this->comments;
+    }
+    public function addComment(Comment $comment): static
+    {
+        $this->comments->add($comment);
 
         return $this;
     }

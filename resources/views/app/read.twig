@@ -60,34 +60,37 @@
                     </li>
                 </ul>
             </div>
-            {# <div class="col-4 text-center bg-warning-subtle p-2">
-                <a href="#">
-                    <i class="bi bi-share-fill text-primary"></i>
-                </a>
-            </div> #}
 		</div>
         {% for comment in blog.comments %}
-            <div class="card border-primary">
-                <div class=" card-header">{{comment.email}}</div>
+            <div class="card border-primary mt-4">
+                <div class=" card-header">{{comment.user.name}}</div>
                 <div class="card-body">
                     <p class="lead">{{comment.text}}</p>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-6 text-center border-end border-light">
+                            <button class="btn p-0 toggle-comment-tick-btn" data-blog-uuid="{{blog.uuid}}">
+                                <i class="bi {{comment_ticked ? 'bi-check-circle-fill' : 'bi-check-circle'}} text-primary toggle-tick-icon"></i>
+                            </button>
+                        </div>
+                        <div class="col-6 text-end">
+                            {{comment.created_at | date('d, m Y')}}
+                        </div>
+                    </div>
                 </div>
             </div>
         {% endfor %}
         {% if user %}
             <div class="mt-4 card border-primary">
-                <div class="card-header">
-                    <p class="lead card-title">Leave a comment</p>
-                </div>
                 <div class="card-body" id="comment">
-                    <form action="#" method="post">
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" id="email" name="email" class="form-control" required>
-                        </div>
+                    <form action="/blog/{{blog.uuid}}/comment" method="post">
+                        {{csrf.fields | raw}}
+                        <p class="lead card-title">Leave a comment</p>
+                        <hr>
                         <div class="mb-3">
                             <label for="text" class="form-label">Comment</label>
-                            <textarea class="form-control" name="text" id="text" required></textarea>
+                            <textarea class="form-control" name="comment" id="text" required></textarea>
                         </div>
                         <button class="btn btn-primary">Submit</button>
                     </form>

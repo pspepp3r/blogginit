@@ -27,19 +27,10 @@ class Comment
     private int $id;
 
     #[Column]
-    private string $email;
-
-    #[Column]
     private string $text;
 
     #[Column]
-    private int $ticks;
-
-    #[Column('ip_address')]
-    private string $ipAddress;
-
-    #[Column('user_agent')]
-    private string $userAgent;
+    private int $ticks = 0;
 
     #[Column]
     private DateTime $createdAt;
@@ -53,6 +44,9 @@ class Comment
     #[ManyToOne(inversedBy: 'comments')]
     private Blog $blog;
 
+    #[ManyToOne(inversedBy: 'comments')]
+    private User $user;
+
     public function __construct()
     {
         $this->replies = new ArrayCollection();
@@ -62,18 +56,6 @@ class Comment
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-
-        return $this;
     }
 
     public function getText(): string
@@ -96,30 +78,6 @@ class Comment
     public function setTicks(int $ticks): static
     {
         $this->ticks = $ticks;
-
-        return $this;
-    }
-
-    public function getIpAddress(): string
-    {
-        return $this->ipAddress;
-    }
-
-    public function setIpAddress(string $ipAddress): static
-    {
-        $this->ipAddress = $ipAddress;
-
-        return $this;
-    }
-
-    public function getUserAgent(): string
-    {
-        return $this->userAgent;
-    }
-
-    public function setUserAgent(string $userAgent): static
-    {
-        $this->userAgent = $userAgent;
 
         return $this;
     }
@@ -169,6 +127,19 @@ class Comment
     {
         $this->blog = $blog;
         $blog->addComment($this);
+
+        return $this;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): static
+    {
+        $this->user = $user;
+        $user->addComment($this);
 
         return $this;
     }
