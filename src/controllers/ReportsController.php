@@ -32,4 +32,15 @@ class ReportsController
 
         return $this->twig->render($response, 'app/reports.twig', $args);
     }
+
+    public function renderReport(Response $response, array $args): Response
+    {
+        // $user = $this->twig->getEnvironment()->getGlobals()['user'];
+
+        $args = [
+            'blog' => $this->blogService->getBlog($args['uuid']),
+            'comment' => $this->blogService->totalComments($args['uuid'])
+        ];
+        return $this->twig->render($response, 'app/report.twig', $args);
+    }
 }
