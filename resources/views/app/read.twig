@@ -34,6 +34,7 @@
             <div class="col-4 text-center bg-warning-subtle p-2 border-end border-light">
                 <button class="btn p-0 toggle-tick-btn" data-blog-uuid="{{blog.uuid}}">
                     <i class="bi {{ticked ? 'bi-check-circle-fill' : 'bi-check-circle'}} text-primary toggle-tick-icon"></i>
+                    {# {{blog.ticks}} #}
                 </button>
             </div>
             <div class="col-4 text-center bg-warning-subtle p-2 border-end border-light">
@@ -47,11 +48,11 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="https://www.facebook.com/sharer.php?text=Check out this blog on {{blog.title}} at: https%3A%2F%2Fblogginit.test/blog/{{blog.uuid}}" target="_blank">
                             <i class="bi bi-facebook me-1 text-primary"></i> Share on FB</a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="https://www.twitter.com/intent/tweet?text=Check out this blog on {{blog.title}} at: https%3A%2F%2Fblogginit.test/blog/{{blog.uuid}}" target="_blank">
                             <i class="bi bi-twitter-x me-1 text-primary"></i> Share on X</a>
                     </li>
                     <li>

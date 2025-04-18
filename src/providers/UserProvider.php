@@ -61,7 +61,7 @@ class UserProvider
         if ($user instanceof User) {
             return $this->entityManager
                 ->getRepository(Interactions::class)
-                ->findOneBy(['user' => $user, 'blog' => $blog]) ? true : false;
+                ->findOneBy(['user' => $user, 'blog' => $blog, 'interaction' => 'tick']) ? true : false;
         } else {
             return false;
         }

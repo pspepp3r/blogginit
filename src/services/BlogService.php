@@ -68,6 +68,10 @@ class BlogService
     {
         $blog = $this->blogProvider->getByUUId($uuid);
 
+        if(!$blog){
+            return null;
+        }
+
         if($user instanceof User){
             if ($this->interactionsProvider->getViewByUser($user)) {
                 return $blog;
