@@ -26,6 +26,11 @@ class InteractionsProvider
         return $this->entityManager->getRepository(Interactions::class)->findOneBy(['user' => $user, 'interaction' => 'view']);
     }
 
+    public function getViewByIp(string $user): ?Interactions
+    {
+        return $this->entityManager->getRepository(Interactions::class)->findOneBy(['ipAddress' => $user, 'interaction' => 'view']);
+    }
+
     public function createTickInteraction(Blog $blog, User $user): Interactions
     {
         $interaction = new Interactions();

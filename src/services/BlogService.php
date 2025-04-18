@@ -79,10 +79,14 @@ class BlogService
             
             $this->interactionsProvider->createViewInteraction($blog, $user);
             $this->blogProvider->addView($blog);
-
+            
             return $blog;
         } else {
+            if($this->interactionsProvider->getViewByIp($user)){
+                return $blog;
+            }
             $this->interactionsProvider->createGuestView($blog, $user);
+            $this->blogProvider->addView($blog);
 
             return $blog;
         }
