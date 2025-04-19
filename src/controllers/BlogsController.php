@@ -53,12 +53,13 @@ class BlogsController
          */
         $user = $this->twig->getEnvironment()->getGlobals()['user'];
 
-        if(!$user)
+        if (!$user)
             $user = $request->getServerParams()['REMOTE_ADDR'];
 
-
         if (!$blog = $this->blogService->addView($args['uuid'], $user)) {
-            return $response->withHeader('Location', '/error?code=404&message=Blog not found')->withStatus(302);
+            return $response
+                ->withHeader('Location', '/error?code=404&message=Blog not found')
+                ->withStatus(302);
         }
 
         $args = [

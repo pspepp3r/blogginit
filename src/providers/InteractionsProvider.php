@@ -16,19 +16,19 @@ class InteractionsProvider
         private readonly EntityManager $entityManager
     ) {}
 
-    public function getTickByUser(User $user): ?Interactions
+    public function getTickByUser(User $user, Blog $blog): ?Interactions
     {
-        return $this->entityManager->getRepository(Interactions::class)->findOneBy(['user' => $user, 'interaction' => 'tick']);
+        return $this->entityManager->getRepository(Interactions::class)->findOneBy(['user' => $user, 'blog' => $blog, 'interaction' => 'tick']);
     }
 
-    public function getViewByUser(User $user): ?Interactions
+    public function getViewByUser(User $user, Blog $blog): ?Interactions
     {
-        return $this->entityManager->getRepository(Interactions::class)->findOneBy(['user' => $user, 'interaction' => 'view']);
+        return $this->entityManager->getRepository(Interactions::class)->findOneBy(['user' => $user, 'blog' => $blog, 'interaction' => 'view']);
     }
 
-    public function getViewByIp(string $user): ?Interactions
+    public function getViewByIp(string $user, Blog $blog): ?Interactions
     {
-        return $this->entityManager->getRepository(Interactions::class)->findOneBy(['ipAddress' => $user, 'interaction' => 'view']);
+        return $this->entityManager->getRepository(Interactions::class)->findOneBy(['ipAddress' => $user, 'blog' => $blog, 'interaction' => 'view']);
     }
 
     public function createTickInteraction(Blog $blog, User $user): Interactions

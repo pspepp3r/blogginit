@@ -82,7 +82,7 @@ class BlogService
         }
 
         if ($user instanceof User) {
-            if ($this->interactionsProvider->getViewByUser($user)) {
+            if ($this->interactionsProvider->getViewByUser($user, $blog)) {
                 return $blog;
             }
 
@@ -91,9 +91,10 @@ class BlogService
 
             return $blog;
         } else {
-            if ($this->interactionsProvider->getViewByIp($user)) {
+            if ($this->interactionsProvider->getViewByIp($user, $blog)) {
                 return $blog;
             }
+
             $this->interactionsProvider->createGuestView($blog, $user);
             $this->blogProvider->addView($blog);
 
@@ -118,9 +119,12 @@ class BlogService
 
     public function toggleTick(string $uuid, User $user)
     {
+        /**
+         * @var Blog
+         */
         $blog = $this->getBlog($uuid);
 
-        if ($interaction = $this->interactionsProvider->getTickByUser($user)) {
+        if ($interaction = $this->interactionsProvider->getTickByUser($user, $blog)) {
             $this->interactionsProvider->deleteInteraction($interaction);
 
             $this->blogProvider->removeTick($blog);

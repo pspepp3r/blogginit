@@ -63,7 +63,43 @@
 						</ul>
 					</div>
 				</div>
-
+                <div class="nav-dropdown d-block d-md-none">
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" id="navDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-arrow-left-right"></i>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navDropdown">
+                            {% if user %}
+                                <li>
+									<a class="dropdown-item" href="/dashboard">Dashboard</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="/reports">Statistics</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="/settings">Settings</a>
+								</li>
+                                {% else %}
+                                    <li>
+                                        <a class="dropdown-item" href="/login">Login</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="/register">Register</a>
+                                    </li>
+                            {% endif %}
+                            <hr>
+                            <li>
+                                <a class="dropdown-item" href="/extra/about">About</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/extra/services">Terms of Service</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/extra/privacy">Privacy Policy</a>
+                            </li>
+						</ul>
+					</div>
+				</div>
 			</div>
 		</nav>
 

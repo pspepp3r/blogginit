@@ -31,7 +31,7 @@ class Blog
     #[Column]
     private string $title;
 
-    #[Column]
+    #[Column(length: 2000)]
     private string $content;
 
     // #[Column]
@@ -172,7 +172,7 @@ class Blog
 
         return $this;
     }
-    
+
     public function getInteractions(): ArrayCollection|Collection
     {
         return $this->interactions;
