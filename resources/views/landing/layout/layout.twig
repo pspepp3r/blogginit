@@ -31,22 +31,23 @@
 	<body class="bg-light">
 
     {% block nav %}
-        
+
     {% endblock %}
 
 		<div class="container mb-4">
-        
+
             {% block content %}{% endblock %}
 
 		</div>
 
-        
-    <footer class="bg-primary text-white p-2 text-center mt-4 fixed-bottom">
+
+    <footer class="bg-primary text-white p-2 text-center mt-4">
 
         <div class="container">
 
             <p>&copy; {{ 'now' | date('Y') }} Blogginit. All rights reserved.</p>
-            
+            <p><a href="/extra/about" class="text-white">About Page</a></p>
+
         </div>
 
     </footer>
