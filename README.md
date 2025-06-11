@@ -7,8 +7,8 @@ Blogginit is a blogging platform designed to simplify content creation and manag
 - **User Authentication**: Secure login and registration system.
 - **Post Management**: Create, edit, delete, and view blog posts.
 - **Responsive Design**: Optimized for both desktop and mobile devices.
-- **Rich Text Editor**: Easily format and style your blog content.
-- **Category Management**: Organize posts into categories for better navigation.
+- **Rich Text Editor**: Easily format and style your blog content (Proposed).
+- **Category Management**: Organize posts into categories for better navigation (Proposed).
 
 ## Installation
 
@@ -28,18 +28,20 @@ Blogginit is a blogging platform designed to simplify content creation and manag
 
     ```bash
     npm install
+    composer require
     ```
 
 4. Configure the environment variables in a `.env` file.
-5. Start the development server:
+5. Generate Application key:
 
     ```bash
-    npm start
+    php blogginig app:generate
     ```
+6. Open with a choice web server (Apache recommended)
 
 ## Usage
 
-1. Open your browser and navigate to `http://localhost:3000`.
+1. Open your browser and navigate to the URL specified by the browser configuration (most likely `http://localhost:80/`.
 2. Register or log in to your account.
 3. Start creating and managing your blog posts.
 
