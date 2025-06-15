@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  app: # Your Apache + mod_php application service
+    build:
+      context: ""
+      dockerfile: Dockerfile # Looks for my-php-app/docker/Dockerfile
+      args: # Pass build arguments for user/group IDs
+        USER_ID: '${WWWUSER:-1000}'
+        GROUP_ID: '${WWWGROUP:-1000}'
+        USER: '${USER:-whoami}'
+    container_name: blogginit
+    restart: always
+    working_dir: /var/www/
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "8000:80" # !!! IMPORTANT CHANGE: Map host port 8000 to container's Apache port 80 !!!
+    volumes:
+      - ../:/var/www # Mounts my-php-app/ (project root) into container's /var/www
+      # Mount your PHP local.ini file
+
+  db: # MySQL Database Service (unchanged)
+    container_name: blogginit-db
+    image: mysql:8.0
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+
+  mailhog:
+    container_name: blogginit-mailhog
+    image: mailhog/mailhog
+    restart: always
+    logging:
+      driver: "none"
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+
+  redis: # Redis Service (unchanged)
+    image: redis:latest
+    container_name: blogginit-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass mypassword
