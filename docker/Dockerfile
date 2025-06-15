@@ -5,7 +5,8 @@ FROM php:8.3-apache
 ARG USER
 ARG USER_ID
 ARG GROUP_ID
-WORKDIR /var/www/html
+
+WORKDIR /var/www
 
 # Install any necessary PHP extensions
 RUN apt-get update && apt-get install -y \
@@ -33,13 +34,16 @@ RUN pecl install xdebug \
 # Copy Composer if you use it
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-# !!! IMPORTANT CHANGE HERE !!!
 # Copy your custom Apache configuration from its new location
-COPY docker/apache/apache.conf /etc/apache2/sites-enabled/000-default.conf
+COPY apache/httpd.conf /etc/apache2/sites-enabled/000-default.conf
 
 # Copy your entire PHP application code into the container.
 # This 'COPY .' still refers to the build context, which will be 'my-php-app/'
 COPY . /var/www/html
+
+# Apache's default user is 'www-data'. Set ownership to that user/group for the mounted volume.
+RUN chown -R www-data:www-data /var/www
+
 
 # If you have a 'composer.json' file, install dependencies here (optional)
 # RUN composer install --no-dev --optimize-autoloader
