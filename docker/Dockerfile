@@ -2,6 +2,9 @@
 # --------------------------------------------------------------------------
 FROM php:8.3-apache
 
+ARG USER
+ARG USER_ID
+ARG GROUP_ID
 WORKDIR /var/www/html
 
 # Install any necessary PHP extensions
@@ -42,3 +45,9 @@ COPY . /var/www/html
 # RUN composer install --no-dev --optimize-autoloader
 
 EXPOSE 80
+
+RUN groupadd --force -g $GROUP_ID $USER
+RUN useradd -ms /bin/bash --no-user-group -g $GROUP_ID -u 1337 $USER
+RUN usermod -u $USER_ID $USER
+
+USER $USER
