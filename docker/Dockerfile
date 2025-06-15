@@ -35,7 +35,7 @@ RUN pecl install xdebug \
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # Copy your custom Apache configuration from its new location
-COPY apache/httpd.conf /etc/apache2/sites-enabled/000-default.conf
+COPY ./apache/httpd.conf /etc/apache2/sites-enabled/000-default.conf
 
 # Copy your entire PHP application code into the container.
 # This 'COPY .' still refers to the build context, which will be 'my-php-app/'
