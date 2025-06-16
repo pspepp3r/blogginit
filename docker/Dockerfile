@@ -37,8 +37,19 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 # Copy your custom Apache configuration from its new location
 COPY ./docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
 
-RUN groupadd --force -g $GROUP_ID $USER
-RUN useradd -ms /bin/bash --no-user-group -g $GROUP_ID -u 1337 $USER
-RUN usermod -u $USER_ID $USER
+# Create group if it doesn't exist, using --gid for ID. '|| true' prevents build failure if it exists.
+RUN getent group $GROUP_ID || groupadd --gid $GROUP_ID $USER
 
-USER $USER
+# Create user if it doesn't exist, using --uid for ID.
+# Add to the created group and also to the www-data group (-G www-data).
+# '|| true' prevents build failure if user already exists.
+RUN getent passwd $USER_ID || useradd -ms /bin/bash --uid $USER_ID --gid $GROUP_ID -G www-data $USER
+
+# Set ownership of the application directory to www-data.
+# Apache runs as www-data, so it needs to own/have write access to these files
+# (e.g., for caches, logs, uploads). This applies to the *image's* files.
+RUN chown -R www-data:www-data /var/www/html
+
+# --- END User and Permissions Setup ---
+
+EXPOSE 80
