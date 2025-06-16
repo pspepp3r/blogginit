@@ -34,6 +34,8 @@ RUN pecl install xdebug \
 # Copy Composer if you use it
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
+COPY . /var/www
+
 # Copy your custom Apache configuration from its new location
 COPY ./docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
 
