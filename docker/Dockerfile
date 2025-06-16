@@ -51,5 +51,3 @@ RUN getent passwd $USER_ID || useradd -ms /bin/bash --uid $USER_ID --gid $GROUP_
 RUN chown -R www-data:www-data /var/www/html
 
 # --- END User and Permissions Setup ---
-
-EXPOSE 80
