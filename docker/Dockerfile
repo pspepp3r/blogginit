@@ -17,8 +17,10 @@ RUN apt-get update && apt-get install -y \
     vim \
     libicu-dev
 
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash \
-    && apt-get install nodejs -y
+# Install Node.js
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -40,7 +42,9 @@ COPY . /var/www
 COPY ./docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
 
 RUN composer install --no-dev --optimize-autoloader --no-scripts --prefer-dist
-RUN npm ci --production
+
+# RUN npm ci --production
+RUN npm install
 
 # Create group if it doesn't exist, using --gid for ID. '|| true' prevents build failure if it exists.
 RUN getent group $GROUP_ID || groupadd --gid $GROUP_ID $USER
