@@ -39,6 +39,9 @@ COPY . /var/www
 # Copy your custom Apache configuration from its new location
 COPY ./docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
 
+RUN composer install --no-dev --optimize-autoloader --no-scripts --prefer-dist
+RUN npm ci --production
+
 # Create group if it doesn't exist, using --gid for ID. '|| true' prevents build failure if it exists.
 RUN getent group $GROUP_ID || groupadd --gid $GROUP_ID $USER
 
