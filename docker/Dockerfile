@@ -48,6 +48,6 @@ RUN getent passwd $USER_ID || useradd -ms /bin/bash --uid $USER_ID --gid $GROUP_
 # Set ownership of the application directory to www-data.
 # Apache runs as www-data, so it needs to own/have write access to these files
 # (e.g., for caches, logs, uploads). This applies to the *image's* files.
-RUN chown -R www-data:www-data /var/www/html
+RUN chown -R www-data:www-data /var/www
 
 # --- END User and Permissions Setup ---
