@@ -37,19 +37,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 # Copy your custom Apache configuration from its new location
 COPY ./docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
 
-# Copy your entire PHP application code into the container.
-# This 'COPY .' still refers to the build context, which will be 'my-php-app/'
-COPY . /var/www/html
-
-# Apache's default user is 'www-data'. Set ownership to that user/group for the mounted volume.
-RUN chown -R www-data:www-data /var/www
-
-
-# If you have a 'composer.json' file, install dependencies here (optional)
-# RUN composer install --no-dev --optimize-autoloader
-
-EXPOSE 80
-
 RUN groupadd --force -g $GROUP_ID $USER
 RUN useradd -ms /bin/bash --no-user-group -g $GROUP_ID -u 1337 $USER
 RUN usermod -u $USER_ID $USER
