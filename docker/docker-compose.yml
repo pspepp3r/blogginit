@@ -15,7 +15,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
-      - "8000:80" # !!! IMPORTANT CHANGE: Map host port 8000 to container's Apache port 80 !!!
+      - "9003:9003" # !!! IMPORTANT CHANGE: Map host port 8000 to container's Apache port 80 !!!
     volumes:
       - ../:/var/www # Mounts my-php-app/ (project root) into container's /var/www
       # Mount your PHP local.ini file
