@@ -46,8 +46,6 @@ RUN composer install --no-dev --optimize-autoloader --no-scripts --prefer-dist
 # RUN npm ci --production
 RUN npm install
 
-RUN php blogginit app:generate-key
-
 RUN php blogginit migrations:diff
 
 RUN php blogginit migrations:migrate
