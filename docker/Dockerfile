@@ -46,6 +46,12 @@ RUN composer install --no-dev --optimize-autoloader --no-scripts --prefer-dist
 # RUN npm ci --production
 RUN npm install
 
+RUN php blogginit app:generate-key
+
+RUN php blogginit migrations:diff
+
+RUN php blogginit migrations:migrate
+
 # Create group if it doesn't exist, using --gid for ID. '|| true' prevents build failure if it exists.
 RUN getent group $GROUP_ID || groupadd --gid $GROUP_ID $USER
 
